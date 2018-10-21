@@ -207,7 +207,6 @@
  '(custom-safe-themes
    (quote
     ("e61752b5a3af12be08e99d076aedadd76052137560b7e684a8be2f8d2958edc3" "13d20048c12826c7ea636fbe513d6f24c0d43709a761052adbca052708798ce3" "26d49386a2036df7ccbe802a06a759031e4455f07bda559dcf221f53e8850e69" default)))
- '(dimmer-mode t nil (dimmer))
  '(js-indent-level 2)
  '(nyan-mode t)
  '(org-confirm-babel-evaluate nil)
@@ -227,7 +226,11 @@
   (package-install 'use-package))
 (eval-when-compile
   (require 'use-package))
-(require 'diminish)
+(unless (package-installed-p 'diminish)
+  (package-refresh-contents)
+  (package-install 'diminish))
+(eval-when-compile
+  (require 'diminish))
 
 
 ;; Appearance configuration
@@ -246,7 +249,8 @@
   :config
   (with-no-warnings
     (setq moe-theme-highlight-buffer-id t)
-    (moe-theme-set-color 'purple))
+    (moe-theme-set-color 'purple)
+    (moe-dark))
   )
 
 (use-package powerline
@@ -319,6 +323,7 @@
   :ensure t
   )
 (use-package atomic-chrome
+  :ensure t
   :config
   (atomic-chrome-start-server)
   )
