@@ -40,6 +40,13 @@
   (server-start))
 
 
+;; Bell configuration
+;; ----------------------------------------------------------------------------------------------------
+(if (display-graphic-p)
+    (setq visible-bell t)
+  (setq ring-bell-function (lambda () (message "*beep*"))))
+
+
 ;; Font configuration
 ;;----------------------------------------------------------------------------------------------------
 (set-face-attribute 'default nil :font
