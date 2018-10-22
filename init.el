@@ -518,6 +518,8 @@
   (add-hook 'before-save-hook 'tide-format-before-save)
   (setq tide-format-options '(:indentSize 2 :tabSize 2))
   (setq company-tooltip-align-annotations t)
+  (defvar web-mode-enable-auto-quoting)
+  (setq web-mode-enable-auto-quoting nil)
   :after (company flycheck)
   )
 (flycheck-add-mode 'typescript-tslint 'web-mode)
