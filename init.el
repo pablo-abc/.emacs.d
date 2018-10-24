@@ -54,6 +54,17 @@
                     ;;"-CYEL-Iosevka-light-normal-normal-*-13-*-*-*-d-0-iso10646-1")
                     "-SRC-Hack-normal-normal-normal-*-12-*-*-*-m-0-iso10646-1" :height (if (eq system-type 'darwin) 120 90))
 
+;; Env configuration
+;; ----------------------------------------------------------------------------------------------------
+(defun read-lines (filePath)
+  "Return a list of lines of a file at FILEPATH."
+  (with-temp-buffer
+    (insert-file-contents filePath)
+    (split-string (buffer-string) "\n" t)))
+
+(defvar env-variables)
+(setq env-variables (mapcar (lambda (var) (split-string var "=")) (read-lines (expand-file-name "~/.emacs.d/.env"))))
+
 (defconst fira-code-font-lock-keywords-alist
   (mapcar (lambda (regex-char-pair)
             `(,(car regex-char-pair)
@@ -390,7 +401,9 @@
     (write-region (point-min) (point-max) (concat "/tmp/" new-file-name))
     (shell-command
      (concat
-      "APIARY_API_KEY=b560ff2737f44cefa416eeb40c5373f1 "
+      "APIARY_API_KEY="
+      (second (assoc "APIARY_KEY" env-variables))
+      " "
       (shell-command-to-string "ruby -e 'print Gem.user_dir'")
       "/bin/apiary publish --path="
       "/tmp/"
@@ -732,7 +745,6 @@
   (insert (shell-command-to-string "date \"+%Y-%m-%d %T\""))
   (delete-char -1)
   )
-
 
 ;; make backup to a designated dir, mirroring the full path
 ;;----------------------------------------------------------------------------------------------------

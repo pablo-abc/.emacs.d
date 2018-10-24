@@ -3,3 +3,4 @@ emojis/
 emacs-backup/
 auto-save-list/
 recentf
+.env
