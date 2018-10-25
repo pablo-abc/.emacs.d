@@ -571,6 +571,36 @@
 (setq typescript-indent-level 2)
 
 
+;; Vue configuration
+;; ----------------------------------------------------------------------------------------------------
+(defun vue-insert-template ()
+  "Insert template for a VueJS single file component."
+  (interactive)
+  (let (tag-id (name (read-string "Component name ")) (tag (read-string "Initial tag: ")))
+    (insert "<template>\n")
+    (when (> (length tag) 0)
+      (setq tag-id (read-string "Enter id for tag: "))
+      (when (> (length tag-id) 0) (setq tag-id (concat " id=\"" tag-id "\"")))
+      (insert "<" tag tag-id ">\n\n</" tag ">"))
+    (insert "\n</template>")
+    (insert
+     "\n<script>\n"
+     "export default ({\n")
+    (insert "  name: '" name "',\n")
+    (insert
+     "});"
+     "\n</script>")
+    (insert "\n<style scoped>\n\n</style>")
+    (vue-mode-reparse))
+  )
+
+(use-package vue-mode
+  :ensure t
+  :bind (:map vue-mode-map
+              ("C-c i" . vue-insert-template))
+  )
+
+
 ;; Clojure configuration
 ;;----------------------------------------------------------------------------------------------------
 (add-hook 'cider-repl-mode-hook #'company-mode)
