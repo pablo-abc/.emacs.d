@@ -230,7 +230,7 @@
  '(org-confirm-babel-evaluate nil)
  '(package-selected-packages
    (quote
-    (rjsx-mode visual-regexp visual-regexp-steroids octave-mode gitmoji company-emoji emojify diminish google-this pipenv company-jedi elpy powerline dimmer focus unicode-fonts moe-theme ledger-mode atomic-chrome sql-indent ob-http ob-restclient plantuml-mode drawille xkcd beacon hacker-typer cargo flycheck-rust rust-mode clojure-mode cider zone-nyan ivy-hydra nyan-mode indium counsel swiper ivy markdown-mode editorconfig json-mode neotree vue-mode tide typescript-mode evil slack restclient company-tern ag xref-js2 js2-refactor exec-path-from-shell js-format magit apib-mode yaml-mode racket-mode ac-js2 use-package erc-hl-nicks weechat js2-mode smartparens auto-package-update web-mode php-mode flycheck)))
+    (lsp-ui company-lsp lsp-mode lsp-vue flycheck-flow rjsx-mode visual-regexp visual-regexp-steroids octave-mode gitmoji company-emoji emojify diminish google-this pipenv company-jedi elpy powerline dimmer focus unicode-fonts moe-theme ledger-mode atomic-chrome sql-indent ob-http ob-restclient plantuml-mode drawille xkcd beacon hacker-typer cargo flycheck-rust rust-mode clojure-mode cider zone-nyan ivy-hydra nyan-mode indium counsel swiper ivy markdown-mode editorconfig json-mode neotree vue-mode tide typescript-mode evil slack restclient company-tern ag xref-js2 js2-refactor exec-path-from-shell js-format magit apib-mode yaml-mode racket-mode ac-js2 use-package erc-hl-nicks weechat js2-mode smartparens auto-package-update web-mode php-mode flycheck)))
  '(speedbar-show-unknown-files t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -473,13 +473,15 @@
 
 ;; JavaScript configuration
 ;;----------------------------------------------------------------------------------------------------
+(load-file "~/.emacs.d/flow-for-emacs/flow.el")
 (use-package indium
   :ensure t
   :hook (js2-mode . indium-interaction-mode)
   )
 (use-package company
   :ensure t
-  :hook (js2-mode . company-mode)
+  :hook ((js2-mode . company-mode)
+         (vue-mode . company-mode))
   )
 
 (use-package company-tern
@@ -581,7 +583,7 @@
     (when (> (length tag) 0)
       (setq tag-id (read-string "Enter id for tag: "))
       (when (> (length tag-id) 0) (setq tag-id (concat " id=\"" tag-id "\"")))
-      (insert "<" tag tag-id ">\n\n</" tag ">"))
+      (insert "  <" tag tag-id ">\n\n  </" tag ">"))
     (insert "\n</template>")
     (insert
      "\n<script>\n"
@@ -598,6 +600,30 @@
   :ensure t
   :bind (:map vue-mode-map
               ("C-c i" . vue-insert-template))
+  :config
+  (setq vue-html-extra-indent 2)
+  )
+
+(use-package lsp-mode
+  :ensure t
+  )
+
+(use-package lsp-ui
+  :ensure t
+  :config
+  (add-to-list 'flycheck-checkers 'lsp-ui)
+  )
+
+(use-package lsp-vue
+  :ensure t
+  :hook (vue-mode . lsp-vue-mmm-enable)
+  )
+
+(use-package company-lsp
+  :ensure t
+  :config
+  (add-to-list 'company-backends 'company-lsp)
+  :after (company)
   )
 
 
