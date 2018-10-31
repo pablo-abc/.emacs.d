@@ -42,7 +42,7 @@
 
 ;; Bell configuration
 ;; ----------------------------------------------------------------------------------------------------
-(if (display-graphic-p)
+(if (and (display-graphic-p) (not (eq system-type 'darwin)))
     (setq visible-bell t)
   (setq ring-bell-function (lambda () (message "*beep*"))))
 
@@ -564,7 +564,6 @@
   (setq tide-format-options '(:indentSize 2 :tabSize 2))
   (setq company-tooltip-align-annotations t)
   (defvar web-mode-enable-auto-quoting)
-  (setq web-mode-enable-auto-quoting nil)
   :after (company flycheck)
   )
 (flycheck-add-mode 'typescript-tslint 'web-mode)
@@ -773,7 +772,7 @@
   (setq web-mode-markup-indent-offset 2)
   (setq web-mode-code-indent-offset 2)
   (setq web-mode-css-indent-offset 2)
-
+  (setq web-mode-enable-auto-quoting nil)
   (setq web-mode-enable-auto-pairing t)
   (setq web-mode-enable-auto-expanding t)
   (setq web-mode-enable-css-colorization t)
