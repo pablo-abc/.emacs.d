@@ -275,6 +275,8 @@
   :ensure t
   :config
   (with-no-warnings
+    (when (memq window-system '(mac ns x))
+      (setq powerline-image-apple-rgb t))
     (powerline-moe-theme)
     (moe-dark))
   :after (moe-theme)
