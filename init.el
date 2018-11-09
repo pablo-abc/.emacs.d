@@ -789,6 +789,30 @@
   :ensure t
   :hook (julia-mode . julia-repl-mode))
 
+;; Slack configuration
+;;----------------------------------------------------------------------------------------------------
+(use-package slack
+  :ensure t
+  :init
+  (setq slack-buffer-emojify t) ;; if you want to enable emoji, default nil
+  (setq slack-prefer-current-team t)
+  :config
+  (slack-register-team
+   :name "applaudostudios"
+   :default t
+   :token (second (assoc "SLACK_TOKEN" env-variables))
+   :client-id (second (assoc "SLACK_CLIENT_ID" env-variables))
+   :client-secret (second (assoc "SLACK_CLIENT_SECRET" env-variables))
+   :subscribed-channels '(general arauco arauco-feeds devteam web-devs)
+   :full-and-display-names t)
+  )
+
+(use-package alert
+  :ensure t
+  :commands (alert)
+  :init
+  (setq alert-default-style 'notifier))
+
 ;; Org mode configuration
 ;;----------------------------------------------------------------------------------------------------
 (global-set-key "\C-cl" 'org-store-link)
