@@ -49,10 +49,11 @@
 
 ;; Font configuration
 ;;----------------------------------------------------------------------------------------------------
-(set-face-attribute 'default nil :font
-                    ;;"-CTDB-Fira Code-normal-normal-normal-*-11-*-*-*-m-0-iso10646-1" :height 90)
-                    ;;"-CYEL-Iosevka-light-normal-normal-*-13-*-*-*-d-0-iso10646-1")
-                    "-SRC-Hack-normal-normal-normal-*-12-*-*-*-m-0-iso10646-1" :height (if (eq system-type 'darwin) 120 90))
+(set-face-attribute
+ 'default nil :font
+ ;;"-CTDB-Fira Code-normal-normal-normal-*-11-*-*-*-m-0-iso10646-1" :height 90)
+ ;;"-CYEL-Iosevka-light-normal-normal-*-13-*-*-*-d-0-iso10646-1")
+ "-SRC-Hack-normal-normal-normal-*-12-*-*-*-m-0-iso10646-1" :height (if (eq system-type 'darwin) 120 90))
 
 ;; Env configuration
 ;; ----------------------------------------------------------------------------------------------------
@@ -63,7 +64,10 @@
     (split-string (buffer-string) "\n" t)))
 
 (defvar env-variables)
-(setq env-variables (mapcar (lambda (var) (split-string var "=")) (read-lines (expand-file-name "~/.emacs.d/.env"))))
+(setq env-variables
+      (mapcar
+       (lambda (var) (split-string var "="))
+       (read-lines (expand-file-name "~/.emacs.d/.env"))))
 
 (defconst fira-code-font-lock-keywords-alist
   (mapcar (lambda (regex-char-pair)
