@@ -633,7 +633,7 @@
                (substring (buffer-file-name) 0 -3))
        nil
        (concat file-dir "makefile")))
-  (compile "make")))
+    (compile "make run")))
 
 (use-package go-mode
   :ensure t
