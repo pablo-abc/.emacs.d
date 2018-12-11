@@ -21,13 +21,17 @@
     (tool-bar-mode -1)
     (setq initial-frame-alist
           '(
-            (width . 255) ; chars
+            (if (eq system-type 'darwin)
+                (width . 80)
+              (width . 255)) ; chars
             (height . 60) ; lines
             (left . 50)
             (top . 50)))
     (setq default-frame-alist
           '(
-            (width . 255)
+            (if (eq system-type 'darwin)
+                (width . 80)
+              (width . 255))
             (height . 60)
             (left . 50)
             (top . 50))))
@@ -495,8 +499,9 @@
 (use-package company
   :ensure t
   :hook ((js2-mode . company-mode)
-         (vue-mode . company-mode))
-  )
+         (vue-mode . company-mode)
+         (cider-repl-mode . company-mode)
+         (cider-mode . company-mode)))
 
 (use-package company-tern
   :ensure t
@@ -506,48 +511,42 @@
   :bind (:map tern-mode-keymap
               ("M-." . nil)
               ("M-," . nil)
-              )
-  )
+              ))
 
 (use-package js2-mode
   :ensure t
   :mode "\\.js\\'"
   :bind (:map js2-mode-map
-              ("C-k" . js2r-kill)
-              )
+              ("C-k" . js2r-kill))
   :config
-  (setq js2-mode-show-strict-warnings nil)
-  )
+  (setq js2-mode-show-strict-warnings nil))
 
 (use-package js2-refactor
   :ensure t
   :hook ((js2-mode . js2-imenu-extras-mode)
-         (js2-mode . js2-refactor-mode)
-         )
+         (js2-mode . js2-refactor-mode))
   :config
   (with-no-warnings
     (js2r-add-keybindings-with-prefix "C-c r"))
-  :after (js2-mode)
-  )
+  :after (js2-mode))
 
 (use-package xref-js2
   :ensure t
   :hook ((js2-mode . (lambda ()
-                       (add-hook 'xref-backend-functions #'xref-js2-xref-backend nil t))))
-  :after (js2-mode)
-  )
+                       (add-hook
+                        'xref-backend-functions
+                        #'xref-js2-xref-backend nil t))))
+  :after (js2-mode))
 
 (use-package js
   :bind (:map js-mode-map
-              ("M-." . nil)
-              )
-  )
+              ("M-." . nil)))
+
 (use-package json-mode
-  :ensure t
-  )
+  :ensure t)
+
 (use-package rjsx-mode
-  :ensure t
-  )
+  :ensure t)
 
 
 ;; TypeScript configuration
@@ -642,9 +641,16 @@
 
 ;; Clojure configuration
 ;;----------------------------------------------------------------------------------------------------
-(add-hook 'cider-repl-mode-hook #'company-mode)
-(add-hook 'cider-mode-hook #'company-mode)
+(use-package clojure-mode
+  :ensure t
+  )
 
+(use-package cider
+  :ensure t
+  :config
+  (add-hook 'cider-repl-mode-hook #'company-mode)
+  (add-hook 'cider-mode-hook #'company-mode)
+  )
 
 ;; Octave configuration
 ;;----------------------------------------------------------------------------------------------------
