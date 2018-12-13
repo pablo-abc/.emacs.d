@@ -307,8 +307,9 @@
     :ensure t
     :config
     (exec-path-from-shell-initialize))
-  (setq ns-alternate-modifier 'meta)
-  (setq ns-right-alternate-modifier 'none))
+  (with-no-warnings
+    (setq ns-alternate-modifier 'meta)
+    (setq ns-right-alternate-modifier 'none)))
 
 
 ;; Tools configuration
@@ -805,7 +806,8 @@
   :defer t
   :init
   (setq slack-buffer-emojify t) ;; if you want to enable emoji, default nil
-  (setq slack-prefer-current-team t)
+  (with-no-warnings
+    (setq slack-prefer-current-team t))
   :config
   (slack-register-team
    :name "applaudostudios"
