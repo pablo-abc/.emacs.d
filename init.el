@@ -359,8 +359,9 @@
                                           root))))
       (when (and eslint (file-executable-p eslint))
         (setq-local flycheck-javascript-eslint-executable eslint))))
-
-  (add-hook 'flycheck-mode-hook #'my/use-eslint-from-node-modules)
+  (if (fboundp 'my/use-eslint-from-node-modules)
+      (add-hook 'flycheck-mode-hook #'my/use-eslint-from-node-modules)
+    (message "my/use-eslint-from-node-modules not defined"))
   ;; (flycheck-add-next-checker 'python-flake8 'python-mypy)
   )
 
@@ -421,7 +422,8 @@
     (shell-command
      (concat
       "APIARY_API_KEY="
-      (second (assoc "APIARY_KEY" env-variables))
+      (when (fboundp 'second)
+        (second (assoc "APIARY_KEY" env-variables)))
       " "
       (shell-command-to-string "ruby -e 'print Gem.user_dir'")
       "/bin/apiary publish --path="
@@ -566,7 +568,10 @@
   (setq company-tooltip-align-annotations t)
   (defvar web-mode-enable-auto-quoting)
   :after (company flycheck))
-(flycheck-add-mode 'typescript-tslint 'web-mode)
+
+(if (fboundp 'flycheck-add-mode)
+    (flycheck-add-mode 'typescript-tslint 'web-mode)
+  (message "flycheck-add-mode not defined"))
 ;; aligns annotation to the right hand side
 (defvar typescript-indent-level)
 (setq typescript-indent-level 2)
@@ -574,31 +579,32 @@
 
 ;; Vue configuration
 ;; ----------------------------------------------------------------------------------------------------
-(defun vue-insert-template ()
-  "Insert template for a VueJS single file component."
-  (interactive)
-  (let (tag-id (name (read-string "Component name ")) (tag (read-string "Initial tag: ")))
-    (insert "<template>\n")
-    (when (> (length tag) 0)
-      (setq tag-id (read-string "Enter id for tag: "))
-      (when (> (length tag-id) 0) (setq tag-id (concat " id=\"" tag-id "\"")))
-      (insert "  <" tag tag-id ">\n\n  </" tag ">"))
-    (insert "\n</template>")
-    (insert
-     "\n<script>\n"
-     "export default ({\n")
-    (insert "  name: '" name "',\n")
-    (insert
-     "});"
-     "\n</script>")
-    (insert "\n<style scoped>\n\n</style>")
-    (vue-mode-reparse)))
-
 (use-package vue-mode
   :ensure t
   :bind (:map vue-mode-map
               ("C-c i" . vue-insert-template))
   :config
+  (defun vue-insert-template ()
+    "Insert template for a VueJS single file component."
+    (interactive)
+    (let (tag-id (name (read-string "Component name ")) (tag (read-string "Initial tag: ")))
+      (insert "<template>\n")
+      (when (> (length tag) 0)
+        (setq tag-id (read-string "Enter id for tag: "))
+        (when (> (length tag-id) 0) (setq tag-id (concat " id=\"" tag-id "\"")))
+        (insert "  <" tag tag-id ">\n\n  </" tag ">"))
+      (insert "\n</template>")
+      (insert
+       "\n<script>\n"
+       "export default ({\n")
+      (insert "  name: '" name "',\n")
+      (insert
+       "});"
+       "\n</script>")
+      (insert "\n<style scoped>\n\n</style>")
+      (if (fboundp 'vue-mode-reparse)
+          (vue-mode-reparse)
+        (message "vue-mode-reparse not defined"))))
   (setq vue-html-extra-indent 2))
 
 (use-package lsp-mode
@@ -814,8 +820,7 @@
   :defer t
   :init
   (setq slack-buffer-emojify t) ;; if you want to enable emoji, default nil
-  (with-no-warnings
-    (setq slack-prefer-current-team t))
+  (setq slack-prefer-current-team t)
   :config
   (slack-register-team
    :name "applaudostudios"
@@ -849,7 +854,9 @@
 (add-hook 'prog-mode-hook #'display-line-numbers-mode)
 
 (with-eval-after-load 'rust-mode
-  (add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
+  (if (fboundp 'flycheck-rust-setup)
+      (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
+    (message "flycheck-rust-setup not defined")))
 
 (setq-default indent-tabs-mode nil)
 (setq tab-width 2) ; or any other preferred value
