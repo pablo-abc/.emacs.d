@@ -329,8 +329,16 @@
   :ensure t
   :defer t)
 
+(use-package which-key
+  :ensure t
+  :config
+  (which-key-mode))
+
 (use-package ranger
-  :ensure t)
+  :ensure t
+  ;; :bind ("C-x d" . ranger)
+  :config
+  (ranger-override-dired-mode t))
 
 (use-package google-this
   :ensure t
