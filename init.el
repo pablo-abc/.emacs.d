@@ -19,22 +19,15 @@
   (progn
     (menu-bar-mode -1)
     (tool-bar-mode -1)
-    (setq initial-frame-alist
-          '(
-            (if (eq system-type 'darwin)
-                (width . 80)
-              (width . 255)) ; chars
-            (height . 60) ; lines
-            (left . 50)
-            (top . 50)))
-    (setq default-frame-alist
-          '(
-            (if (eq system-type 'darwin)
-                (width . 80)
-              (width . 255))
-            (height . 60)
-            (left . 50)
-            (top . 50)))))
+    (let ((window-config
+           `(,(if (eq system-type 'darwin)
+                  '(width . 80)
+                '(width . 255)) ; chars
+             (height . 60) ; lines
+             (left . 50)
+             (top . 50))))
+      (setq initial-frame-alist window-config)
+      (setq default-frame-alist window-config))))
 (setq inhibit-startup-screen t)
 (setq package-enable-at-startup nil)
 ;; (setq x-select-enable-clipboard-manager nil)
