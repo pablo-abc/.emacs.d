@@ -229,7 +229,7 @@
  '(org-confirm-babel-evaluate nil)
  '(package-selected-packages
    (quote
-    (ranger dockerfile-mode godoctor go-guru company-go go-mode htmlize py-autopep8 julia-repl julia-mode lsp-ui company-lsp lsp-mode lsp-vue flycheck-flow rjsx-mode visual-regexp visual-regexp-steroids octave-mode gitmoji company-emoji emojify diminish google-this pipenv company-jedi elpy powerline dimmer focus unicode-fonts moe-theme ledger-mode atomic-chrome sql-indent ob-http ob-restclient plantuml-mode drawille xkcd beacon hacker-typer cargo flycheck-rust rust-mode clojure-mode cider zone-nyan ivy-hydra nyan-mode indium counsel swiper ivy markdown-mode editorconfig json-mode neotree vue-mode tide typescript-mode evil slack restclient company-tern ag xref-js2 js2-refactor exec-path-from-shell js-format magit apib-mode yaml-mode racket-mode ac-js2 use-package erc-hl-nicks weechat js2-mode smartparens auto-package-update web-mode php-mode flycheck)))
+    (dockerfile-mode godoctor go-guru company-go go-mode htmlize py-autopep8 julia-repl julia-mode lsp-ui company-lsp lsp-mode lsp-vue flycheck-flow rjsx-mode visual-regexp visual-regexp-steroids octave-mode gitmoji company-emoji emojify diminish google-this pipenv company-jedi elpy powerline dimmer focus unicode-fonts moe-theme ledger-mode atomic-chrome sql-indent ob-http ob-restclient plantuml-mode drawille xkcd beacon hacker-typer cargo flycheck-rust rust-mode clojure-mode cider zone-nyan ivy-hydra nyan-mode indium counsel swiper ivy markdown-mode editorconfig json-mode neotree vue-mode tide typescript-mode evil restclient company-tern ag xref-js2 js2-refactor exec-path-from-shell js-format magit apib-mode yaml-mode racket-mode ac-js2 use-package erc-hl-nicks weechat js2-mode smartparens auto-package-update web-mode php-mode flycheck)))
  '(speedbar-show-unknown-files t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -810,27 +810,27 @@
 
 ;; Slack configuration
 ;;----------------------------------------------------------------------------------------------------
-(use-package slack
-  :ensure t
-  :defer t
-  :init
-  (setq slack-buffer-emojify t) ;; if you want to enable emoji, default nil
-  (setq slack-prefer-current-team t)
-  :config
-  (slack-register-team
-   :name "applaudostudios"
-   :default t
-   :token (second (assoc "SLACK_TOKEN" env-variables))
-   :client-id (second (assoc "SLACK_CLIENT_ID" env-variables))
-   :client-secret (second (assoc "SLACK_CLIENT_SECRET" env-variables))
-   :subscribed-channels '(general arauco arauco-feeds devteam web-devs)
-   :full-and-display-names t))
+;; (use-package slack
+;;   :ensure t
+;;   :defer t
+;;   :init
+;;   (setq slack-buffer-emojify t) ;; if you want to enable emoji, default nil
+;;   (setq slack-prefer-current-team t)
+;;   :config
+;;   (slack-register-team
+;;    :name "applaudostudios"
+;;    :default t
+;;    :token (second (assoc "SLACK_TOKEN" env-variables))
+;;    :client-id (second (assoc "SLACK_CLIENT_ID" env-variables))
+;;    :client-secret (second (assoc "SLACK_CLIENT_SECRET" env-variables))
+;;    :subscribed-channels '(general arauco arauco-feeds devteam web-devs)
+;;    :full-and-display-names t))
 
-(use-package alert
-  :ensure t
-  :commands (alert)
-  :init
-  (setq alert-default-style 'notifier))
+;; (use-package alert
+;;   :ensure t
+;;   :commands (alert)
+;;   :init
+;;   (setq alert-default-style 'notifier))
 
 ;; Org mode configuration
 ;;----------------------------------------------------------------------------------------------------
