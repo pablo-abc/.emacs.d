@@ -229,7 +229,7 @@
  '(org-confirm-babel-evaluate nil)
  '(package-selected-packages
    (quote
-    (dockerfile-mode godoctor go-guru company-go go-mode htmlize py-autopep8 julia-repl julia-mode lsp-ui company-lsp lsp-mode lsp-vue flycheck-flow rjsx-mode visual-regexp visual-regexp-steroids octave-mode gitmoji company-emoji emojify diminish google-this pipenv company-jedi elpy powerline dimmer focus unicode-fonts moe-theme ledger-mode atomic-chrome sql-indent ob-http ob-restclient plantuml-mode drawille xkcd beacon hacker-typer cargo flycheck-rust rust-mode clojure-mode cider zone-nyan ivy-hydra nyan-mode indium counsel swiper ivy markdown-mode editorconfig json-mode neotree vue-mode tide typescript-mode evil restclient company-tern ag xref-js2 js2-refactor exec-path-from-shell js-format magit apib-mode yaml-mode racket-mode ac-js2 use-package erc-hl-nicks weechat js2-mode smartparens auto-package-update web-mode php-mode flycheck)))
+    (which-key dockerfile-mode godoctor go-guru company-go go-mode htmlize py-autopep8 julia-repl julia-mode lsp-ui company-lsp lsp-mode lsp-vue flycheck-flow rjsx-mode visual-regexp visual-regexp-steroids octave-mode gitmoji company-emoji emojify diminish google-this pipenv company-jedi elpy powerline dimmer focus unicode-fonts moe-theme ledger-mode atomic-chrome sql-indent ob-http ob-restclient plantuml-mode drawille xkcd beacon hacker-typer cargo flycheck-rust rust-mode clojure-mode cider zone-nyan ivy-hydra nyan-mode indium counsel swiper ivy markdown-mode editorconfig json-mode neotree vue-mode tide typescript-mode evil restclient company-tern ag xref-js2 js2-refactor exec-path-from-shell js-format magit apib-mode yaml-mode racket-mode ac-js2 use-package erc-hl-nicks weechat js2-mode smartparens auto-package-update web-mode php-mode flycheck)))
  '(speedbar-show-unknown-files t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -363,7 +363,7 @@
         (setq-local flycheck-javascript-eslint-executable eslint))))
   (if (fboundp 'my/use-eslint-from-node-modules)
       (add-hook 'flycheck-mode-hook #'my/use-eslint-from-node-modules)
-    (message "my/use-eslint-from-node-modules not defined"))
+    (error "Not defined: %s"  "my/use-eslint-from-node-modules"))
   ;; (flycheck-add-next-checker 'python-flake8 'python-mypy)
   )
 
@@ -573,7 +573,7 @@
 
 (if (fboundp 'flycheck-add-mode)
     (flycheck-add-mode 'typescript-tslint 'web-mode)
-  (message "flycheck-add-mode not defined"))
+  (error "Not defined: %s"  "flycheck-add-mode"))
 ;; aligns annotation to the right hand side
 (defvar typescript-indent-level)
 (setq typescript-indent-level 2)
@@ -606,7 +606,7 @@
       (insert "\n<style scoped>\n\n</style>")
       (if (fboundp 'vue-mode-reparse)
           (vue-mode-reparse)
-        (message "vue-mode-reparse not defined"))))
+        (error "Not defined: %s"  "vue-mode-reparse"))))
   (setq vue-html-extra-indent 2))
 
 (use-package lsp-mode
@@ -858,7 +858,7 @@
 (with-eval-after-load 'rust-mode
   (if (fboundp 'flycheck-rust-setup)
       (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
-    (message "flycheck-rust-setup not defined")))
+    (error "Not defined: %s" "flycheck-rust-setup")))
 
 (setq-default indent-tabs-mode nil)
 (setq tab-width 2) ; or any other preferred value
