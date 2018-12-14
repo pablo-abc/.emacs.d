@@ -883,6 +883,20 @@
   (insert (shell-command-to-string "date \"+%Y-%m-%d %T\""))
   (delete-char -1))
 
+(defun carbon-now-cli ()
+  "Send file or region to carbon-now-cli."
+  (interactive)
+  (if (not mark-active)
+      (shell-command (concat "carbon-now -h " (buffer-file-name)))
+    (let ((begin-line (line-number-at-pos (region-beginning)))
+          (end-line (line-number-at-pos (region-end))))
+      (shell-command (concat "carbon-now -h -s "
+                             (number-to-string begin-line)
+                             " -e "
+                             (number-to-string end-line)
+                             " "
+                             (buffer-file-name))))))
+
 ;; make backup to a designated dir, mirroring the full path
 ;;----------------------------------------------------------------------------------------------------
 (defun my-backup-file-name (fpath)
