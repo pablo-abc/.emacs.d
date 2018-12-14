@@ -256,24 +256,28 @@
   :diminish
   :if (display-graphic-p)
   :config
-  (with-no-warnings
+  (when (fboundp 'zone-when-idle)
     (zone-when-idle 120)))
 
 (use-package moe-theme
   :ensure t
   :config
-  (with-no-warnings
-    (setq moe-theme-highlight-buffer-id t)
-    (moe-theme-set-color 'purple)
+  (defvar moe-theme-highlight-buffer-id)
+  (setq moe-theme-highlight-buffer-id t)
+  (when (fboundp 'moe-theme-set-color)
+    (moe-theme-set-color 'purple))
+  (when (fboundp 'moe-dark)
     (moe-dark)))
 
 (use-package powerline
   :ensure t
   :config
-  (with-no-warnings
-    (when (memq window-system '(mac ns x))
-      (setq powerline-image-apple-rgb t))
-    (powerline-moe-theme)
+
+  (when (memq window-system '(mac ns x))
+    (setq powerline-image-apple-rgb t))
+  (when (fboundp 'powerline-moe-theme)
+    (powerline-moe-theme))
+  (when (fboundp 'moe-dark)
     (moe-dark))
   :after (moe-theme))
 
@@ -281,9 +285,11 @@
   :ensure t
   :if (display-graphic-p)
   :config
-  (with-no-warnings
-    (nyan-mode)
-    (nyan-toggle-wavy-trail)
+  (when (fboundp 'nyan-mode)
+    (nyan-mode))
+  (when (fboundp 'nyan-toggle-wavy-trail)
+    (nyan-toggle-wavy-trail))
+  (when (fboundp 'nyan-start-animation)
     (nyan-start-animation)))
 
 (use-package dimmer
@@ -307,9 +313,10 @@
     :ensure t
     :config
     (exec-path-from-shell-initialize))
-  (with-no-warnings
-    (setq ns-alternate-modifier 'meta)
-    (setq ns-right-alternate-modifier 'none)))
+  (defvar ns-alternate-modifier)
+  (defvar ns-right-alternate-modifier)
+  (setq ns-alternate-modifier 'meta)
+  (setq ns-right-alternate-modifier 'none))
 
 
 ;; Tools configuration
@@ -511,7 +518,7 @@
   :hook ((js2-mode . js2-imenu-extras-mode)
          (js2-mode . js2-refactor-mode))
   :config
-  (with-no-warnings
+  (when (fboundp 'js2r-add-keybindings-with-prefix)
     (js2r-add-keybindings-with-prefix "C-c r"))
   :after (js2-mode))
 
