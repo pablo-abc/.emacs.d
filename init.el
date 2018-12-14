@@ -331,14 +331,9 @@
 
 (use-package which-key
   :ensure t
+  :diminish
   :config
   (which-key-mode))
-
-(use-package ranger
-  :ensure t
-  ;; :bind ("C-x d" . ranger)
-  :config
-  (ranger-override-dired-mode t))
 
 (use-package google-this
   :ensure t
