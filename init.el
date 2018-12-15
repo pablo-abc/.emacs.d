@@ -904,9 +904,16 @@
   (carbon-now-execute-dwim))
 
 (defun carbon-now-save-dwim-to-file (file-path)
-  "Send file or region to carbon-now-cli and save it to FILE-PATH."
-  (interactive "DEnter file path: ")
-  (carbon-now-execute-dwim (concat "-l " file-path)))
+  "Send file or region to carbon-now-cli and save it to FILE-PATH.
+if FILE_PATH is a file, it will be saved with that file-name.
+If it is a directory, it will be saved with a generated name."
+  (interactive "GEnter file path: ")
+  (carbon-now-execute-dwim
+   (concat "-l "
+           (substring (file-name-directory file-path) 0 -1)
+           (if (not (string= "" (file-name-nondirectory file-path)))
+               (concat " -t " (file-name-nondirectory file-path))
+             ""))))
 
 ;; make backup to a designated dir, mirroring the full path
 ;;----------------------------------------------------------------------------------------------------
