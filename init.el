@@ -883,10 +883,9 @@
   (insert (shell-command-to-string "date \"+%Y-%m-%d %T\""))
   (delete-char -1))
 
-(defun carbon-now-cli ()
-  "Send file or region to carbon-now-cli."
-  (interactive)
-  (if (not mark-active)
+(defun carbon-now-execute-dwim (&optional argument)
+  "Execute command depending on region and optionally append ARGUMENT."
+    (if (not mark-active)
       (shell-command (concat "carbon-now -h " (buffer-file-name)))
     (let ((begin-line (line-number-at-pos (region-beginning)))
           (end-line (line-number-at-pos (region-end))))
@@ -894,8 +893,20 @@
                              (number-to-string begin-line)
                              " -e "
                              (number-to-string end-line)
-                             " "
-                             (buffer-file-name))))))
+                             (if argument
+                                 (concat " " argument " ")
+                               " ")
+                               (buffer-file-name))))))
+
+(defun carbon-now-save-dwim ()
+  "Send file or region to carbon-now-cli."
+  (interactive)
+  (carbon-now-execute-dwim))
+
+(defun carbon-now-save-dwim-to-file (file-path)
+  "Send file or region to carbon-now-cli and save it to FILE-PATH."
+  (interactive "DEnter file path: ")
+  (carbon-now-execute-dwim (concat "-l " file-path)))
 
 ;; make backup to a designated dir, mirroring the full path
 ;;----------------------------------------------------------------------------------------------------
