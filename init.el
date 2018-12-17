@@ -252,6 +252,10 @@
 
 ;; Appearance configuration
 ;;---------------------------------------------------------------------------------
+(use-package rainbow-delimiters
+  :ensure t
+  :hook (prog-mode . rainbow-delimiters-mode))
+
 (use-package zone
   :diminish
   :if (display-graphic-p)
@@ -786,7 +790,10 @@
 (use-package beacon
   :ensure t
   :diminish
-  :config (beacon-mode 1))
+  :config
+  (if (display-graphic-p)
+      (beacon-mode 1)
+    (beacon-mode nil)))
 
 (use-package erc
   :config
