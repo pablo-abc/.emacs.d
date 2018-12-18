@@ -49,7 +49,8 @@
  'default nil :font
  ;;"-CTDB-Fira Code-normal-normal-normal-*-11-*-*-*-m-0-iso10646-1" :height 90)
  ;;"-CYEL-Iosevka-light-normal-normal-*-13-*-*-*-d-0-iso10646-1")
- "-SRC-Hack-normal-normal-normal-*-12-*-*-*-m-0-iso10646-1" :height (if (eq system-type 'darwin) 120 90))
+ "-SRC-Hack-normal-normal-normal-*-12-*-*-*-m-0-iso10646-1"
+ :height (if (eq system-type 'darwin) 120 90))
 
 ;; Env configuration
 ;; ---------------------------------------------------------------------------------
@@ -72,7 +73,11 @@
                    (compose-region (match-beginning 1)
                                    (match-end 1)
                                    ;; The first argument to concat is a string containing a literal tab
-                                   ,(concat "	" (list (decode-char 'ucs (cadr regex-char-pair)))))))))
+                                   ,(concat
+                                     "	"
+                                     (list (decode-char
+                                            'ucs
+                                            (cadr regex-char-pair)))))))))
           '(("\\(www\\)"                   #Xe100)
             ("[^/]\\(\\*\\*\\)[^/]"        #Xe101)
             ("\\(\\*\\*\\*\\)"             #Xe102)
@@ -191,7 +196,11 @@
 
 (when (display-graphic-p)
   ;; This works when using emacs --daemon + emacsclient
-  (add-hook 'after-make-frame-functions (lambda (frame) (set-fontset-font t '(#Xe100 . #Xe16f) "Fira Code Symbol")))
+  (add-hook 'after-make-frame-functions (lambda (frame)
+                                          (set-fontset-font
+                                           t
+                                           '(#Xe100 . #Xe16f)
+                                           "Fira Code Symbol")))
   ;; This works when using emacs without server/client
   (set-fontset-font t '(#Xe100 . #Xe16f) "Fira Code Symbol")
   ;; I haven't found one statement that makes both of the above situations work, so I use both for now
