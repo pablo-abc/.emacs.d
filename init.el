@@ -351,7 +351,12 @@
   :after (ivy)
   :config
   (setq projectile-completion-system 'ivy)
-  (projectile-mode +1))
+  (projectile-mode +1)
+  (projectile-register-project-type 'yarn '("yarn.lock")
+                  :compile "yarn"
+                  :test "yarn test:cov"
+                  :run "yarn start:dev"
+                  :test-suffix ".spec"))
 
 (use-package counsel-projectile
   :ensure t
