@@ -352,11 +352,13 @@
   :config
   (setq projectile-completion-system 'ivy)
   (projectile-mode +1)
-  (projectile-register-project-type 'yarn '("yarn.lock")
-                  :compile "yarn"
-                  :test "yarn test:cov"
-                  :run "yarn start:dev"
-                  :test-suffix ".spec"))
+  (if (fboundp 'projectile-register-project-type)
+      (projectile-register-project-type 'yarn '("yarn.lock")
+                                        :compile "yarn"
+                                        :test "yarn test:cov"
+                                        :run "yarn start:dev"
+                                        :test-suffix ".spec")
+    (error "Not defined: %s" "projectile-register-project-type"))
 
 (use-package counsel-projectile
   :ensure t
