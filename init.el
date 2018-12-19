@@ -595,7 +595,7 @@
          (before-save . tide-format-before-save))
   :config
   (setq tide-format-options
-        '(:indentSize typescript-indent-level :tabSize typescript-indent-level))
+        '(:indentSize 2 :tabSize 2))
   (setq company-tooltip-align-annotations t)
   (defvar web-mode-enable-auto-quoting)
   :after (company flycheck))
