@@ -270,7 +270,7 @@
   :if (display-graphic-p)
   :config
   (when (fboundp 'zone-when-idle)
-    (zone-when-idle 120)))
+    (zone-when-idle 300)))
 
 (use-package moe-theme
   :ensure t
