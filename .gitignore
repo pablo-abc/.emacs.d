@@ -4,3 +4,6 @@ emacs-backup/
 auto-save-list/
 recentf
 .env
+.org-id-locations
+eshell/
+projectile-bookmarks.eld
