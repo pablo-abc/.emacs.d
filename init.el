@@ -358,7 +358,7 @@
                                         :test "yarn test:cov"
                                         :run "yarn start:dev"
                                         :test-suffix ".spec")
-    (error "Not defined: %s" "projectile-register-project-type"))
+    (error "Not defined: %s" "projectile-register-project-type")))
 
 (use-package counsel-projectile
   :ensure t
