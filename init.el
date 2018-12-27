@@ -64,7 +64,7 @@
  ;;"-CTDB-Fira Code-normal-normal-normal-*-11-*-*-*-m-0-iso10646-1" :height 90)
  ;;"-CYEL-Iosevka-light-normal-normal-*-13-*-*-*-d-0-iso10646-1")
  "-SRC-Hack-normal-normal-normal-*-12-*-*-*-m-0-iso10646-1"
- :height (if (eq system-type 'darwin) 120 90))
+ :height (if (eq system-type 'darwin) 120 100))
 
 ;; Env configuration
 ;; ---------------------------------------------------------------------------------
