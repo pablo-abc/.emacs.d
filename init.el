@@ -367,11 +367,14 @@
   (setq projectile-completion-system 'ivy)
   (projectile-mode +1)
   (if (fboundp 'projectile-register-project-type)
-      (projectile-register-project-type 'yarn '("yarn.lock")
-                                        :compile "yarn"
-                                        :test "yarn test:cov"
-                                        :run "yarn start:dev"
-                                        :test-suffix ".spec")
+      (progn
+        (projectile-register-project-type 'yarn '("yarn.lock")
+                                          :compile "yarn"
+                                          :test "yarn test:cov"
+                                          :run "yarn start:dev"
+                                          :test-suffix ".spec")
+        (projectile-register-project-type 'pipenv '("Pipfile")
+                                          :compile "pipenv install"))
     (error "Not defined: %s" "projectile-register-project-type")))
 
 (use-package counsel-projectile
