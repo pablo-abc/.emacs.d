@@ -443,6 +443,9 @@
 (use-package autorevert
   :diminish auto-revert-mode)
 
+(use-package ace-window
+  :ensure t
+  :bind ( "M-o" . ace-window))
 
 ;; Docker configuration
 ;;---------------------------------------------------------------------------------
