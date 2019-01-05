@@ -702,7 +702,9 @@
 (use-package lispy
   :ensure t
   :hook ((emacs-lisp-mode . lispy-mode)
-         (clojure-mode . lispy-mode)))
+         (clojure-mode . lispy-mode))
+  :config
+  (add-to-list 'lispy-compat 'cider))
 
 ;; Clojure configuration
 ;;---------------------------------------------------------------------------------
