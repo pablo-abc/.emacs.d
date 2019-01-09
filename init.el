@@ -458,8 +458,15 @@
   :ensure t
   :bind ( "M-o" . ace-window))
 
+(defun set-fill-column-80 ()
+  "Set fill column to 80."
+  (setq fill-column 80))
+
 (use-package fill-column-indicator
-    :load-path "~/.emacs.d/lisp/fill-column-indicator")
+  :load-path "~/.emacs.d/lisp/fill-column-indicator"
+  :hook ((prog-mode . fci-mode)
+         (prog-mode . set-fill-column-80)
+         (clojure-mode . set-fill-column-80)))
 
 ;; Docker configuration
 ;;---------------------------------------------------------------------------------
