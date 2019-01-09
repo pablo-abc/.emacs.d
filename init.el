@@ -229,10 +229,14 @@
 (let* ((no-ssl (and (memq system-type '(windows-nt ms-dos))
                     (not (gnutls-available-p))))
        (proto (if no-ssl "http" "https")))
-  (add-to-list 'package-archives (cons "melpa" (concat proto "://melpa.org/packages/")) t)
-  (add-to-list 'package-archives (cons "melpa-stable" (concat proto "://stable.melpa.org/packages/")) t)
+  (add-to-list 'package-archives
+               (cons "melpa" (concat proto "://melpa.org/packages/")) t)
+  (add-to-list
+   'package-archives
+   (cons "melpa-stable" (concat proto "://stable.melpa.org/packages/")) t)
   (when (< emacs-major-version 24)
-    (add-to-list 'package-archives '("gnu" . (concat proto "://elpa.gnu.org/packages/")))))
+    (add-to-list 'package-archives
+                 '("gnu" . (concat proto "://elpa.gnu.org/packages/")))))
 (package-initialize)
 
 (custom-set-variables
@@ -454,6 +458,9 @@
   :ensure t
   :bind ( "M-o" . ace-window))
 
+(use-package fill-column-indicator
+    :load-path "~/.emacs.d/lisp/fill-column-indicator")
+
 ;; Docker configuration
 ;;---------------------------------------------------------------------------------
 (use-package dockerfile-mode
@@ -483,7 +490,8 @@
 (defun apiary-preview-current-buffer ()
   "Execute apiary preview on current buffer."
   (interactive)
-  (let ((new-file-name (concat "temp-" (number-to-string (random most-positive-fixnum)))))
+  (let ((new-file-name (concat "temp-" (number-to-string
+                                        (random most-positive-fixnum)))))
     (write-region (point-min) (point-max) (concat "/tmp/" new-file-name))
     (shell-command
      (concat
@@ -495,7 +503,8 @@
 (defun apiary-publish (apiary-api-name)
   "Publish apib document to specified APIARY-API-NAME."
   (interactive "sEnter API name: ")
-  (let ((new-file-name (concat "temp-" (number-to-string (random most-positive-fixnum)))))
+  (let ((new-file-name (concat "temp-" (number-to-string
+                                        (random most-positive-fixnum)))))
     (write-region (point-min) (point-max) (concat "/tmp/" new-file-name))
     (shell-command
      (concat
@@ -641,7 +650,8 @@
   :ensure t
   :hook ((typescript-mode . setup-tide-mode)
          (web-mode . (lambda ()
-		       (when (string-equal "tsx" (file-name-extension buffer-file-name))
+		       (when (string-equal
+                              "tsx" (file-name-extension buffer-file-name))
 		         (setup-tide-mode))))
          (before-save . tide-format-before-save))
   :config
@@ -669,11 +679,13 @@
   (defun vue-insert-template ()
     "Insert template for a VueJS single file component."
     (interactive)
-    (let (tag-id (name (read-string "Component name ")) (tag (read-string "Initial tag: ")))
+    (let (tag-id (name (read-string "Component name "))
+                 (tag (read-string "Initial tag: ")))
       (insert "<template>\n")
       (when (> (length tag) 0)
         (setq tag-id (read-string "Enter id for tag: "))
-        (when (> (length tag-id) 0) (setq tag-id (concat " id=\"" tag-id "\"")))
+        (when (> (length tag-id) 0)
+          (setq tag-id (concat " id=\"" tag-id "\"")))
         (insert "  <" tag tag-id ">\n\n  </" tag ">"))
       (insert "\n</template>")
       (insert
@@ -711,6 +723,7 @@
 ;;---------------------------------------------------------------------------------
 (use-package lispy
   :ensure t
+  :diminish
   :hook ((emacs-lisp-mode . lispy-mode)
          (clojure-mode . lispy-mode)
          (hy-mode . lispy-mode))
@@ -882,8 +895,9 @@
   (setq erc-nick "Pabc1")
   (defvar erc-fill-column)
   (setq erc-fill-column (- (window-width) 2))
-  (add-hook 'erc-mode-hook (lambda ()
-			     (set (make-local-variable 'scroll-conservatively) 100))))
+  (add-hook 'erc-mode-hook
+            (lambda ()
+	      (set (make-local-variable 'scroll-conservatively) 100))))
 
 (use-package web-mode
   :mode (("\\.html?\\'" . web-mode)
@@ -1034,9 +1048,12 @@ If it is a directory, it will be saved with a generated name."
 If the new path's directories does not exist, create them."
   (let* (
          (backupRootDir "~/.emacs.d/emacs-backup/")
-         (filePath (replace-regexp-in-string "[A-Za-z]:" "" fpath )) ; remove Windows driver letter in path, for example, “C:”
-         (backupFilePath (replace-regexp-in-string "//" "/" (concat backupRootDir filePath "~") )))
-    (make-directory (file-name-directory backupFilePath) (file-name-directory backupFilePath))
+         (filePath (replace-regexp-in-string "[A-Za-z]:" "" fpath ))
+         (backupFilePath
+          (replace-regexp-in-string "//" "/"
+                                    (concat backupRootDir filePath "~") )))
+    (make-directory
+     (file-name-directory backupFilePath) (file-name-directory backupFilePath))
     backupFilePath))
 
 (setq make-backup-file-name-function 'my-backup-file-name)
