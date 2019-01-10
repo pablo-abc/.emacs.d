@@ -434,6 +434,11 @@
 ;;   :config
 ;;   (flycheck-clojure-setup))
 
+(use-package objed
+  :ensure t
+  :config
+  (objed-mode))
+
 (use-package restclient
   :ensure t)
 
