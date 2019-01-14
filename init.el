@@ -738,7 +738,8 @@
   :diminish
   :hook ((emacs-lisp-mode . lispy-mode)
          (clojure-mode . lispy-mode)
-         (hy-mode . lispy-mode))
+         (hy-mode . lispy-mode)
+         (scheme-mode . lispy-mode))
   :config
   (add-to-list 'lispy-compat 'cider))
 
