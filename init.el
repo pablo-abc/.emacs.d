@@ -775,7 +775,25 @@
 
 (use-package go-mode
   :ensure t
+  :bind (:map go-mode-map
+              ("C-c C-c" . go-compile-make)
+              ("C-c C-e" . go-run)
+              ("C-c C-q" . go-stop))
   :config
+  (defun go-compile-make ()
+    "Compile code for go."
+    (interactive)
+    (shell-command "go build"))
+  (defun go-run (file-path)
+    "Start go process using FILE-PATH."
+    (interactive "fEnter file: ")
+    (async-shell-command file-path "*Go Process*")
+    (delete-other-windows))
+  (defun go-stop ()
+    "Stop go process."
+    (interactive)
+    (interrupt-process "*Go Process*")
+    (switch-to-buffer "*Go Process*"))
   (add-hook 'before-save-hook 'gofmt-before-save))
 
 (use-package go-guru
