@@ -787,8 +787,7 @@
   (defun go-run (file-path)
     "Start go process using FILE-PATH."
     (interactive "fEnter file: ")
-    (async-shell-command file-path "*Go Process*")
-    (delete-other-windows))
+    (async-shell-command file-path "*Go Process*"))
   (defun go-stop ()
     "Stop go process."
     (interactive)
