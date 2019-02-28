@@ -760,6 +760,9 @@
 (use-package flycheck-joker
   :ensure t)
 
+(use-package racket-mode
+  :ensure t)
+
 ;; Golang configuration
 (defun go-compile-and-run ()
   "Run and compile go program."
