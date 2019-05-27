@@ -479,11 +479,11 @@
   "Set fill column to 80."
   (setq fill-column 80))
 
-(use-package fill-column-indicator
-  :load-path "~/.emacs.d/lisp/fill-column-indicator"
-  :hook ((prog-mode . fci-mode)
-         (prog-mode . set-fill-column-80)
-         (clojure-mode . set-fill-column-80)))
+;; (use-package fill-column-indicator
+;;   :load-path "~/.emacs.d/lisp/fill-column-indicator"
+;;   :hook ((prog-mode . fci-mode)
+;;          (prog-mode . set-fill-column-80)
+;;          (clojure-mode . set-fill-column-80)))
 
 (use-package speed-type
   :ensure t)
@@ -1105,6 +1105,12 @@ If it is a directory, it will be saved with a generated name."
            (if (not (string= "" (file-name-nondirectory file-path)))
                (concat " -t " (file-name-nondirectory file-path))
              ""))))
+
+;; Source: http://www.emacswiki.org/emacs-en/download/misc-cmds.el
+(defun revert-buffer-no-confirm ()
+    "Revert buffer without confirmation."
+    (interactive)
+    (revert-buffer :ignore-auto :noconfirm))
 
 ;; make backup to a designated dir, mirroring the full path
 ;;---------------------------------------------------------------------------------
