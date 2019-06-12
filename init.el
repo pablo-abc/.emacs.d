@@ -247,16 +247,16 @@
  '(ansi-color-names-vector
    ["#212526" "#ff4b4b" "#b4fa70" "#fce94f" "#729fcf" "#e090d7" "#8cc4ff" "#eeeeec"])
  '(beacon-mode t)
- '(custom-enabled-themes (quote (moe-light)))
+ '(custom-enabled-themes (quote (dracula)))
  '(custom-safe-themes
    (quote
-    ("436b185b423b78eb5d110dc23f4b95d78a1f002d156f226b7e6e5b1f6493dda0" "c53b6a09c7d997c3185cb1598de1d0ff15e1679f5445f9a6cb8b2bf4fc4e565a" "c8d19a09f9d2cb1d6aa6c57e1a86b2dab863cc77a3fc7225a4e60baba96726a1" "e61752b5a3af12be08e99d076aedadd76052137560b7e684a8be2f8d2958edc3" "13d20048c12826c7ea636fbe513d6f24c0d43709a761052adbca052708798ce3" "26d49386a2036df7ccbe802a06a759031e4455f07bda559dcf221f53e8850e69" default)))
+    ("274fa62b00d732d093fc3f120aca1b31a6bb484492f31081c1814a858e25c72e" "392395ee6e6844aec5a76ca4f5c820b97119ddc5290f4e0f58b38c9748181e8d" "436b185b423b78eb5d110dc23f4b95d78a1f002d156f226b7e6e5b1f6493dda0" "c53b6a09c7d997c3185cb1598de1d0ff15e1679f5445f9a6cb8b2bf4fc4e565a" "c8d19a09f9d2cb1d6aa6c57e1a86b2dab863cc77a3fc7225a4e60baba96726a1" "e61752b5a3af12be08e99d076aedadd76052137560b7e684a8be2f8d2958edc3" "13d20048c12826c7ea636fbe513d6f24c0d43709a761052adbca052708798ce3" "26d49386a2036df7ccbe802a06a759031e4455f07bda559dcf221f53e8850e69" default)))
  '(js-indent-level 2)
  '(nyan-mode t)
  '(org-confirm-babel-evaluate nil)
  '(package-selected-packages
    (quote
-    (emojify company graphql-mode ob-clojurescript langtool flycheck-vale csharp-mode protobuf-mode flycheck-joker speed-type hy-mode lispy intero haskell-mode counsel-projectile projectile elisp-demos helpful docker carbon-now-sh lsp-ui which-key dockerfile-mode godoctor go-guru company-go go-mode htmlize py-autopep8 julia-repl julia-mode company-lsp flycheck-flow rjsx-mode visual-regexp visual-regexp-steroids octave-mode gitmoji company-emoji diminish google-this pipenv company-jedi elpy powerline dimmer focus unicode-fonts moe-theme ledger-mode atomic-chrome sql-indent ob-http ob-restclient plantuml-mode drawille xkcd beacon hacker-typer cargo flycheck-rust rust-mode clojure-mode cider zone-nyan ivy-hydra nyan-mode indium counsel swiper ivy markdown-mode editorconfig json-mode neotree vue-mode tide typescript-mode evil restclient company-tern ag xref-js2 js2-refactor exec-path-from-shell js-format magit apib-mode yaml-mode racket-mode ac-js2 use-package erc-hl-nicks weechat js2-mode smartparens auto-package-update web-mode php-mode flycheck)))
+    (telephone-line dracula-theme emojify company graphql-mode ob-clojurescript langtool flycheck-vale csharp-mode protobuf-mode flycheck-joker speed-type hy-mode lispy intero haskell-mode counsel-projectile projectile elisp-demos helpful docker carbon-now-sh lsp-ui which-key dockerfile-mode godoctor go-guru company-go go-mode htmlize py-autopep8 julia-repl julia-mode company-lsp flycheck-flow rjsx-mode visual-regexp visual-regexp-steroids octave-mode gitmoji company-emoji diminish google-this pipenv company-jedi elpy powerline dimmer focus unicode-fonts moe-theme ledger-mode atomic-chrome sql-indent ob-http ob-restclient plantuml-mode drawille xkcd beacon hacker-typer cargo flycheck-rust rust-mode clojure-mode cider zone-nyan ivy-hydra nyan-mode indium counsel swiper ivy markdown-mode editorconfig json-mode neotree vue-mode tide typescript-mode evil restclient company-tern ag xref-js2 js2-refactor exec-path-from-shell js-format magit apib-mode yaml-mode racket-mode ac-js2 use-package erc-hl-nicks weechat js2-mode smartparens auto-package-update web-mode php-mode flycheck)))
  '(speedbar-show-unknown-files t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -290,26 +290,38 @@
   (when (fboundp 'zone-when-idle)
     (zone-when-idle 300)))
 
-(use-package moe-theme
-  :ensure t
-  :config
-  (defvar moe-theme-highlight-buffer-id)
-  (setq moe-theme-highlight-buffer-id t)
-  (when (fboundp 'moe-theme-set-color)
-    (moe-theme-set-color 'purple))
-  (when (fboundp 'moe-light)
-    (moe-light)))
-
-;; (use-package powerline
+;; (use-package moe-theme
 ;;   :ensure t
 ;;   :config
-;;   (when (memq window-system '(mac ns x))
-;;     (setq powerline-image-apple-rgb t))
+;;   (defvar moe-theme-highlight-buffer-id)
+;;   (setq moe-theme-highlight-buffer-id t)
+;;   (when (fboundp 'moe-theme-set-color)
+;;     (moe-theme-set-color 'purple))
 ;;   (when (fboundp 'moe-light)
-;;     (moe-light))
-;;   (when (fboundp 'powerline-moe-theme)
-;;     (powerline-moe-theme))
-;;   :after (moe-theme))
+;;     (moe-light)))
+
+(use-package dracula-theme
+  :ensure t)
+
+(when (not (display-graphic-p))
+  (use-package powerline
+    :ensure t
+    :config
+    (when (eq system-type 'darwin)
+      (setq powerline-image-apple-rgb t))
+    (powerline-center-theme)))
+
+(when (display-graphic-p)
+  (use-package telephone-line
+    :ensure t
+    :config
+    (setq telephone-line-primary-left-separator 'telephone-line-cubed-left
+          telephone-line-secondary-left-separator 'telephone-line-cubed-hollow-left
+          telephone-line-primary-right-separator 'telephone-line-cubed-right
+          telephone-line-secondary-right-separator 'telephone-line-cubed-hollow-right)
+    (setq telephone-line-height 24
+          telephone-line-evil-use-short-tag t)
+    (telephone-line-mode 1)))
 
 (use-package nyan-mode
   :ensure t
@@ -1087,7 +1099,7 @@
 
 (defun carbon-now-execute-dwim (&optional argument)
   "Execute command depending on region and optionally append ARGUMENT."
-    (if (not mark-active)
+  (if (not mark-active)
       (shell-command (concat "carbon-now -h " (buffer-file-name)))
     (let ((begin-line (line-number-at-pos (region-beginning)))
           (end-line (line-number-at-pos (region-end))))
@@ -1098,7 +1110,7 @@
                              (if argument
                                  (concat " " argument " ")
                                " ")
-                               (buffer-file-name))))))
+                             (buffer-file-name))))))
 
 (defun carbon-now-save-dwim ()
   "Send file or region to carbon-now-cli."
@@ -1119,9 +1131,9 @@ If it is a directory, it will be saved with a generated name."
 
 ;; Source: http://www.emacswiki.org/emacs-en/download/misc-cmds.el
 (defun revert-buffer-no-confirm ()
-    "Revert buffer without confirmation."
-    (interactive)
-    (revert-buffer :ignore-auto :noconfirm))
+  "Revert buffer without confirmation."
+  (interactive)
+  (revert-buffer :ignore-auto :noconfirm))
 
 ;; make backup to a designated dir, mirroring the full path
 ;;---------------------------------------------------------------------------------
