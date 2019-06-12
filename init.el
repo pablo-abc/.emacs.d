@@ -608,7 +608,6 @@
 
 (use-package company
   :ensure t
-  :pin melpa-stable
   :hook ((js2-mode . company-mode)
          (vue-mode . company-mode)
          (cider-repl-mode . company-mode)
