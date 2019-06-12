@@ -247,7 +247,7 @@
  '(ansi-color-names-vector
    ["#212526" "#ff4b4b" "#b4fa70" "#fce94f" "#729fcf" "#e090d7" "#8cc4ff" "#eeeeec"])
  '(beacon-mode t)
- '(custom-enabled-themes (quote (moe-dark)))
+ '(custom-enabled-themes (quote (moe-light)))
  '(custom-safe-themes
    (quote
     ("436b185b423b78eb5d110dc23f4b95d78a1f002d156f226b7e6e5b1f6493dda0" "c53b6a09c7d997c3185cb1598de1d0ff15e1679f5445f9a6cb8b2bf4fc4e565a" "c8d19a09f9d2cb1d6aa6c57e1a86b2dab863cc77a3fc7225a4e60baba96726a1" "e61752b5a3af12be08e99d076aedadd76052137560b7e684a8be2f8d2958edc3" "13d20048c12826c7ea636fbe513d6f24c0d43709a761052adbca052708798ce3" "26d49386a2036df7ccbe802a06a759031e4455f07bda559dcf221f53e8850e69" default)))
@@ -297,20 +297,19 @@
   (setq moe-theme-highlight-buffer-id t)
   (when (fboundp 'moe-theme-set-color)
     (moe-theme-set-color 'purple))
-  (when (fboundp 'moe-dark)
-    (moe-dark)))
+  (when (fboundp 'moe-light)
+    (moe-light)))
 
-(use-package powerline
-  :ensure t
-  :config
-
-  (when (memq window-system '(mac ns x))
-    (setq powerline-image-apple-rgb t))
-  (when (fboundp 'powerline-moe-theme)
-    (powerline-moe-theme))
-  (when (fboundp 'moe-dark)
-    (moe-dark))
-  :after (moe-theme))
+;; (use-package powerline
+;;   :ensure t
+;;   :config
+;;   (when (memq window-system '(mac ns x))
+;;     (setq powerline-image-apple-rgb t))
+;;   (when (fboundp 'moe-light)
+;;     (moe-light))
+;;   (when (fboundp 'powerline-moe-theme)
+;;     (powerline-moe-theme))
+;;   :after (moe-theme))
 
 (use-package nyan-mode
   :ensure t
