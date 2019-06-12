@@ -303,36 +303,36 @@
 (use-package dracula-theme
   :ensure t)
 
-(when (not (display-graphic-p))
-  (use-package powerline
-    :ensure t
-    :config
-    (when (eq system-type 'darwin)
-      (setq powerline-image-apple-rgb t))
-    (powerline-center-theme)))
+(use-package powerline
+  :ensure t
+  :if (not (display-graphic-p))
+  :config
+  (when (eq system-type 'darwin)
+    (setq powerline-image-apple-rgb t))
+  (powerline-center-theme))
 
-(when (display-graphic-p)
-  (use-package telephone-line
-    :ensure t
-    :config
-    (setq telephone-line-primary-left-separator 'telephone-line-cubed-left
-          telephone-line-secondary-left-separator 'telephone-line-cubed-hollow-left
-          telephone-line-primary-right-separator 'telephone-line-cubed-right
-          telephone-line-secondary-right-separator 'telephone-line-cubed-hollow-right)
-    (setq telephone-line-height 24
-          telephone-line-evil-use-short-tag t)
-    (telephone-line-mode 1)))
-
-(use-package nyan-mode
+(use-package telephone-line
   :ensure t
   :if (display-graphic-p)
   :config
-  (when (fboundp 'nyan-mode)
-    (nyan-mode))
-  (when (fboundp 'nyan-toggle-wavy-trail)
-    (nyan-toggle-wavy-trail))
-  (when (fboundp 'nyan-start-animation)
-    (nyan-start-animation)))
+  (setq telephone-line-primary-left-separator 'telephone-line-cubed-left
+        telephone-line-secondary-left-separator 'telephone-line-cubed-hollow-left
+        telephone-line-primary-right-separator 'telephone-line-cubed-right
+        telephone-line-secondary-right-separator 'telephone-line-cubed-hollow-right)
+  (setq telephone-line-height 24
+        telephone-line-evil-use-short-tag t)
+  (telephone-line-mode 1))
+
+;; (use-package nyan-mode
+;;   :ensure t
+;;   :if (display-graphic-p)
+;;   :config
+;;   (when (fboundp 'nyan-mode)
+;;     (nyan-mode))
+;;   (when (fboundp 'nyan-toggle-wavy-trail)
+;;     (nyan-toggle-wavy-trail))
+;;   (when (fboundp 'nyan-start-animation)
+;;     (nyan-start-animation)))
 
 (use-package dimmer
   :ensure t)
