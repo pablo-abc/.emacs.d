@@ -305,7 +305,7 @@
 
 (use-package powerline
   :ensure t
-  :if (not (display-graphic-p))
+  :if (or (not (display-graphic-p)) (eq system-type 'darwin))
   :config
   (when (eq system-type 'darwin)
     (setq powerline-image-apple-rgb t))
@@ -313,7 +313,7 @@
 
 (use-package telephone-line
   :ensure t
-  :if (display-graphic-p)
+  :if (and (display-graphic-p) (not (eq system-type 'darwin)))
   :config
   (setq telephone-line-primary-left-separator 'telephone-line-cubed-left
         telephone-line-secondary-left-separator 'telephone-line-cubed-hollow-left
@@ -338,7 +338,9 @@
   :ensure t)
 
 (use-package emojify
-  :ensure t)
+  :ensure t
+  :config
+  (add-hook 'after-init-hook #'global-emojify-mode))
 
 (use-package gitmoji
   :load-path "~/.emacs.d/lisp/gitmoji"
