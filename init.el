@@ -225,62 +225,26 @@
 
 ;; Package manager configuration
 ;;---------------------------------------------------------------------------------
-(require 'package)
-(let* ((no-ssl (and (memq system-type '(windows-nt ms-dos))
-                    (not (gnutls-available-p))))
-       (proto (if no-ssl "http" "https")))
-  (add-to-list 'package-archives
-               (cons "melpa" (concat proto "://melpa.org/packages/")) t)
-  (add-to-list
-   'package-archives
-   (cons "melpa-stable" (concat proto "://stable.melpa.org/packages/")) t)
-  (when (< emacs-major-version 24)
-    (add-to-list 'package-archives
-                 '("gnu" . (concat proto "://elpa.gnu.org/packages/")))))
-(package-initialize)
+(defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+      (bootstrap-version 5))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
 
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(ansi-color-names-vector
-   ["#212526" "#ff4b4b" "#b4fa70" "#fce94f" "#729fcf" "#e090d7" "#8cc4ff" "#eeeeec"])
- '(beacon-mode t)
- '(custom-enabled-themes (quote (dracula)))
- '(custom-safe-themes
-   (quote
-    ("274fa62b00d732d093fc3f120aca1b31a6bb484492f31081c1814a858e25c72e" "392395ee6e6844aec5a76ca4f5c820b97119ddc5290f4e0f58b38c9748181e8d" "436b185b423b78eb5d110dc23f4b95d78a1f002d156f226b7e6e5b1f6493dda0" "c53b6a09c7d997c3185cb1598de1d0ff15e1679f5445f9a6cb8b2bf4fc4e565a" "c8d19a09f9d2cb1d6aa6c57e1a86b2dab863cc77a3fc7225a4e60baba96726a1" "e61752b5a3af12be08e99d076aedadd76052137560b7e684a8be2f8d2958edc3" "13d20048c12826c7ea636fbe513d6f24c0d43709a761052adbca052708798ce3" "26d49386a2036df7ccbe802a06a759031e4455f07bda559dcf221f53e8850e69" default)))
- '(js-indent-level 2)
- '(nyan-mode t)
- '(org-confirm-babel-evaluate nil)
- '(package-selected-packages
-   (quote
-    (pomidor groovy-mode csv-mode ess-smart-underscore ess poly-R polymode telephone-line dracula-theme emojify company graphql-mode ob-clojurescript langtool flycheck-vale csharp-mode protobuf-mode flycheck-joker speed-type hy-mode lispy intero haskell-mode counsel-projectile projectile elisp-demos helpful docker carbon-now-sh lsp-ui which-key dockerfile-mode godoctor go-guru company-go go-mode htmlize py-autopep8 julia-repl julia-mode company-lsp flycheck-flow rjsx-mode visual-regexp visual-regexp-steroids octave-mode gitmoji company-emoji diminish google-this pipenv company-jedi elpy powerline dimmer focus unicode-fonts moe-theme ledger-mode atomic-chrome sql-indent ob-http ob-restclient plantuml-mode drawille xkcd beacon hacker-typer cargo flycheck-rust rust-mode clojure-mode cider zone-nyan ivy-hydra nyan-mode indium counsel swiper ivy markdown-mode editorconfig json-mode neotree vue-mode tide typescript-mode evil restclient company-tern ag xref-js2 js2-refactor exec-path-from-shell js-format magit apib-mode yaml-mode racket-mode ac-js2 use-package erc-hl-nicks weechat js2-mode smartparens auto-package-update web-mode php-mode flycheck)))
- '(speedbar-show-unknown-files t))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
-
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
-(eval-when-compile
-  (require 'use-package))
-(unless (package-installed-p 'diminish)
-  (package-refresh-contents)
-  (package-install 'diminish))
-(eval-when-compile
-  (require 'diminish))
-
+(straight-use-package 'use-package)
+(straight-use-package 'diminish)
 
 ;; Appearance configuration
 ;;---------------------------------------------------------------------------------
 (use-package rainbow-delimiters
-  :ensure t
+  :straight t
   :hook (prog-mode . rainbow-delimiters-mode))
 
 (use-package zone
@@ -291,7 +255,7 @@
     (zone-when-idle 300)))
 
 ;; (use-package moe-theme
-;;   :ensure t
+;;   :straight t
 ;;   :config
 ;;   (defvar moe-theme-highlight-buffer-id)
 ;;   (setq moe-theme-highlight-buffer-id t)
@@ -301,10 +265,10 @@
 ;;     (moe-light)))
 
 (use-package dracula-theme
-  :ensure t)
+  :straight t)
 
 (use-package powerline
-  :ensure t
+  :straight t
   :if (or (not (display-graphic-p)) (eq system-type 'darwin))
   :config
   (when (eq system-type 'darwin)
@@ -312,7 +276,7 @@
   (powerline-center-theme))
 
 (use-package telephone-line
-  :ensure t
+  :straight t
   :if (and (display-graphic-p) (not (eq system-type 'darwin)))
   :config
   (setq telephone-line-primary-left-separator 'telephone-line-cubed-left
@@ -324,7 +288,7 @@
   (telephone-line-mode 1))
 
 ;; (use-package nyan-mode
-;;   :ensure t
+;;   :straight t
 ;;   :if (display-graphic-p)
 ;;   :config
 ;;   (when (fboundp 'nyan-mode)
@@ -335,10 +299,10 @@
 ;;     (nyan-start-animation)))
 
 (use-package dimmer
-  :ensure t)
+  :straight t)
 
 (use-package emojify
-  :ensure t
+  :straight t
   :config
   (add-hook 'after-init-hook #'global-emojify-mode))
 
@@ -352,7 +316,7 @@
 ;; ---------------------------------------------------------------------------------
 (when (memq window-system '(mac ns x))
   (use-package exec-path-from-shell
-    :ensure t
+    :straight t
     :config
     (exec-path-from-shell-initialize))
   (defvar ns-alternate-modifier)
@@ -364,27 +328,27 @@
 ;; Tools configuration
 ;; ---------------------------------------------------------------------------------
 (use-package visual-regexp
-  :ensure t)
+  :straight t)
 
 (use-package visual-regexp-steroids
-  :ensure t
+  :straight t
   :after (visual-regexp)
   :bind ())
 
 (use-package flycheck-vale
-  :ensure t
+  :straight t
   :config
   (flycheck-vale-setup))
 
 (use-package langtool
-  :ensure t
+  :straight t
   :init
   (setq langtool-language-tool-jar "/home/pberganza/Downloads/LanguageTool-4.4/languagetool-commandline.jar"))
 
 ;; Miscellaneous packages
 ;; ---------------------------------------------------------------------------------
 (use-package projectile
-  :ensure t
+  :straight t
   :bind-keymap ("C-c p" . projectile-command-map)
   :after (ivy)
   :config
@@ -402,7 +366,7 @@
     (error "Not defined: %s" "projectile-register-project-type")))
 
 (use-package pomidor
-  :ensure t
+  :straight t
   :config (setq pomidor-sound-tick nil
                 pomidor-sound-tack nil)
   :hook (pomidor-mode . (lambda ()
@@ -413,36 +377,36 @@
                           (set-window-buffer nil (current-buffer)))))
 
 (use-package hacker-typer
-  :ensure t)
+  :straight t)
 
 (use-package counsel-projectile
-  :ensure t
+  :straight t
   :after (projectile)
   :config
   (counsel-projectile-mode +1))
 
 (use-package editorconfig
-  :ensure t
+  :straight t
   :diminish
   :config
   (editorconfig-mode 1))
 
 (use-package carbon-now-sh
-  :ensure t)
+  :straight t)
 
 (use-package which-key
-  :ensure t
+  :straight t
   :diminish
   :config
   (which-key-mode))
 
 (use-package google-this
-  :ensure t
+  :straight t
   :defer t
   :bind-keymap ("C-c /" . google-this-mode-submap))
 
 (use-package flycheck
-  :ensure t
+  :straight t
   :config
   ;; https://emacs.stackexchange.com/questions/21205/flycheck-with-file-relative-eslint-executable
   (defun my/use-eslint-from-node-modules ()
@@ -463,31 +427,31 @@
   )
 
 ;; (use-package flycheck-clojure
-;;   :ensure t
+;;   :straight t
 ;;   :after (flycheck)
 ;;   :config
 ;;   (flycheck-clojure-setup))
 
 (use-package objed
-  :ensure t)
+  :straight t)
 
 (use-package restclient
-  :ensure t)
+  :straight t)
 
 (use-package ob-http
-  :ensure t)
+  :straight t)
 
 (use-package ob-restclient
-  :ensure t)
+  :straight t)
 
 (use-package ob-clojurescript
-  :ensure t)
+  :straight t)
 
 (use-package ledger-mode
-  :ensure t)
+  :straight t)
 
 (use-package atomic-chrome
-  :ensure t
+  :straight t
   :config
   (atomic-chrome-start-server))
 
@@ -495,7 +459,7 @@
   :diminish auto-revert-mode)
 
 (use-package ace-window
-  :ensure t
+  :straight t
   :bind ( "M-o" . ace-window))
 
 (defun set-fill-column-80 ()
@@ -509,10 +473,10 @@
 ;;          (clojure-mode . set-fill-column-80)))
 
 (use-package speed-type
-  :ensure t)
+  :straight t)
 
 (use-package multiple-cursors
-  :ensure t
+  :straight t
   :config
   (global-set-key (kbd "C-c m c") 'mc/edit-lines)
   (global-set-key (kbd "C->") 'mc/mark-next-like-this)
@@ -522,11 +486,11 @@
 ;; Docker configuration
 ;;---------------------------------------------------------------------------------
 (use-package dockerfile-mode
-  :ensure t
+  :straight t
   :defer t)
 
 (use-package docker
-  :ensure t
+  :straight t
   :bind ("C-c d" . docker))
 
 ;; Apiary configuration
@@ -580,7 +544,7 @@
     (delete-file (concat "/tmp/" new-file-name))))
 
 (use-package apib-mode
-  :ensure t
+  :straight t
   :mode (("\\.apib\\'" . apib-mode)
          ("\\.mson\\'" . apib-mode))
   :bind (:map apib-mode-map
@@ -596,7 +560,7 @@
 ;; Python configuration
 ;;---------------------------------------------------------------------------------
 (use-package elpy
-  :ensure t
+  :straight t
   :config
   (elpy-enable)
   (setq python-shell-interpreter "ipython"
@@ -605,13 +569,13 @@
   (setq flycheck-python-flake8-executable "flake8"))
 
 (use-package pipenv
-  :ensure t
+  :straight t
   :config
   (setq pipenv-with-flycheck nil)
   :hook (python-mode . pipenv-mode))
 
 (use-package company-jedi
-  :ensure t
+  :straight t
   :after (company)
   :config
   (add-to-list 'company-backends 'company-jedi))
@@ -620,22 +584,22 @@
   :diminish)
 
 (use-package py-autopep8
-  :ensure t
+  :straight t
   :hook (elpy-mode . py-autopep8-enable-on-save))
 
 (use-package hy-mode
-  :ensure t)
+  :straight t)
 
 ;; JavaScript configuration
 ;;---------------------------------------------------------------------------------
 (load-file "~/.emacs.d/flow-for-emacs/flow.el")
 
 (use-package indium
-  :ensure t
+  :straight t
   :hook (js2-mode . indium-interaction-mode))
 
 (use-package company
-  :ensure t
+  :straight t
   :hook ((js2-mode . company-mode)
          (vue-mode . company-mode)
          (cider-repl-mode . company-mode)
@@ -643,7 +607,7 @@
          (go-mode . company-mode)))
 
 (use-package company-tern
-  :ensure t
+  :straight t
   :config
   (add-to-list 'company-backends 'company-tern)
   :hook (js2-mode . tern-mode)
@@ -653,7 +617,7 @@
               ))
 
 (use-package js2-mode
-  :ensure t
+  :straight t
   :mode "\\.js\\'"
   :bind (:map js2-mode-map
               ("C-k" . js2r-kill))
@@ -661,7 +625,7 @@
   (setq js2-mode-show-strict-warnings nil))
 
 (use-package js2-refactor
-  :ensure t
+  :straight t
   :hook ((js2-mode . js2-imenu-extras-mode)
          (js2-mode . js2-refactor-mode))
   :config
@@ -670,7 +634,7 @@
   :after (js2-mode))
 
 (use-package xref-js2
-  :ensure t
+  :straight t
   :hook ((js2-mode . (lambda ()
                        (add-hook
                         'xref-backend-functions
@@ -682,10 +646,10 @@
               ("M-." . nil)))
 
 (use-package json-mode
-  :ensure t)
+  :straight t)
 
 (use-package rjsx-mode
-  :ensure t)
+  :straight t)
 
 
 ;; TypeScript configuration
@@ -706,7 +670,7 @@
   (company-mode +1))
 
 (use-package tide
-  :ensure t
+  :straight t
   :hook ((typescript-mode . setup-tide-mode)
          (web-mode . (lambda ()
 		       (when (string-equal
@@ -734,7 +698,7 @@
 ;; Vue configuration
 ;; ---------------------------------------------------------------------------------
 (use-package vue-mode
-  :ensure t
+  :straight t
   :bind (:map vue-mode-map
               ("C-c i" . vue-insert-template))
   :config
@@ -764,19 +728,19 @@
   (setq vue-html-extra-indent 2))
 
 (use-package lsp-mode
-  :ensure t)
+  :straight t)
 
 (use-package lsp-ui
-  :ensure t
+  :straight t
   :config
   (add-to-list 'flycheck-checkers 'lsp-ui))
 
 ;; (use-package lsp-vue
-;;   :ensure t
+;;   :straight t
 ;;   :hook (vue-mode . lsp-vue-mmm-enable))
 
 (use-package company-lsp
-  :ensure t
+  :straight t
   :config
   (add-to-list 'company-backends 'company-lsp)
   :after (company))
@@ -784,7 +748,7 @@
 ;; Lisp configuration
 ;;---------------------------------------------------------------------------------
 (use-package lispy
-  :ensure t
+  :straight t
   :diminish
   :hook ((emacs-lisp-mode . lispy-mode)
          (clojure-mode . lispy-mode)
@@ -796,19 +760,19 @@
 ;; Clojure configuration
 ;;---------------------------------------------------------------------------------
 (use-package clojure-mode
-  :ensure t)
+  :straight t)
 
 (use-package cider
-  :ensure t
+  :straight t
   :config
   (add-hook 'cider-repl-mode-hook #'company-mode)
   (add-hook 'cider-mode-hook #'company-mode))
 
 (use-package flycheck-joker
-  :ensure t)
+  :straight t)
 
 (use-package racket-mode
-  :ensure t)
+  :straight t)
 
 ;; Golang configuration
 (defun go-compile-and-run ()
@@ -824,7 +788,7 @@
     (compile "make run")))
 
 (use-package go-mode
-  :ensure t
+  :straight t
   :bind (:map go-mode-map
               ("C-c C-c" . go-compile-make)
               ("C-c C-e" . go-run)
@@ -846,15 +810,15 @@
   (add-hook 'before-save-hook 'gofmt-before-save))
 
 (use-package go-guru
-  :ensure t
+  :straight t
   :after (go-mode))
 
 (use-package godoctor
-  :ensure t
+  :straight t
   :after (go-mode))
 
 (use-package company-go
-  :ensure t
+  :straight t
   :config
   (add-to-list 'company-backends 'company-go)
   :after (company))
@@ -875,7 +839,7 @@
 ;; Plantuml configuration
 ;;---------------------------------------------------------------------------------
 (use-package plantuml-mode
-  :ensure t
+  :straight t
   :mode "\\.puml\\'"
   :config
   (defvar org-plantuml-jar-path)
@@ -903,14 +867,14 @@
 (setq org-babel-clojure-backend 'cider)
 
 (use-package yaml-mode
-  :ensure t)
+  :straight t)
 
 (use-package sql-indent
-  :ensure t
+  :straight t
   :hook (sql-mode . sqlind-minor-mode))
 
 (use-package magit
-  :ensure t
+  :straight t
   :bind ("C-x g" . magit-status)
   :config
   (setq magit-completing-read-function 'ivy-completing-read)
@@ -947,11 +911,11 @@
                 :caller 'counsel-emojify-apropos-emoji))))
 
 (use-package ivy-hydra
-  :ensure t
+  :straight t
   :after (ivy))
 
 (use-package counsel
-  :ensure t
+  :straight t
   :bind (("C-s" . counsel-grep-or-swiper)
          ("M-x" . counsel-M-x)
          ("C-x C-f" . counsel-find-file)
@@ -970,10 +934,10 @@
   :after (ag))
 
 (use-package ag
-  :ensure t)
+  :straight t)
 
 (use-package beacon
-  :ensure t
+  :straight t
   :diminish
   :config
   (if (display-graphic-p)
@@ -992,7 +956,7 @@
 (use-package web-mode
   :mode (("\\.html?\\'" . web-mode)
          ("\\.tsx\\'" . web-mode))
-  :ensure t
+  :straight t
   :init
   (setq web-mode-markup-indent-offset 2)
   (setq web-mode-code-indent-offset 2)
@@ -1005,56 +969,56 @@
 ;; Julia configuration
 ;;---------------------------------------------------------------------------------
 (use-package julia-mode
-  :ensure t)
+  :straight t)
 
 (use-package julia-repl
-  :ensure t
+  :straight t
   :hook (julia-mode . julia-repl-mode))
 
 ;; R configuration
 (use-package ess
-  :ensure t)
+  :straight t)
 
 (use-package ess-smart-underscore
-  :ensure t)
+  :straight t)
 
 (use-package polymode
-  :ensure t)
+  :straight t)
 
 (use-package poly-R
-  :ensure t)
+  :straight t)
 
 (use-package poly-markdown
-  :ensure t)
+  :straight t)
 
 ;; C# configuration
 ;; --------------------------------------------------------------------------------
 (use-package csharp-mode
-  :ensure t)
+  :straight t)
 
 ;; Protocol Buffers configuration
 ;; --------------------------------------------------------------------------------
 (use-package protobuf-mode
-  :ensure t)
+  :straight t)
 
 ;; Haskell configuration
 ;;---------------------------------------------------------------------------------
 (use-package haskell-mode
-  :ensure t)
+  :straight t)
 
 (use-package intero
-  :ensure t
+  :straight t
   :hook (haskell-mode . intero-mode))
 
 ;; GraphQL configuration
 ;; --------------------------------------------------------------------------------
 (use-package graphql-mode
-  :ensure t)
+  :straight t)
 
 ;; Slack configuration
 ;;---------------------------------------------------------------------------------
 ;; (use-package slack
-;;   :ensure t
+;;   :straight t
 ;;   :defer t
 ;;   :init
 ;;   (setq slack-buffer-emojify t) ;; if you want to enable emoji, default nil
@@ -1070,7 +1034,7 @@
 ;;    :full-and-display-names t))
 
 ;; (use-package alert
-;;   :ensure t
+;;   :straight t
 ;;   :commands (alert)
 ;;   :init
 ;;   (setq alert-default-style 'notifier))
@@ -1079,13 +1043,13 @@
 ;; ------------------------------------------------------------------------------
 
 (use-package csv-mode
-  :ensure t)
+  :straight t)
 
 ;; Groovy configuration
 ;; ------------------------------------------------------------------------------
 
 (use-package groovy-mode
-  :ensure t)
+  :straight t)
 
 ;; Org mode configuration
 ;;---------------------------------------------------------------------------------
@@ -1122,14 +1086,14 @@
 ;; Help configuration
 ;;---------------------------------------------------------------------------------
 (use-package helpful
-  :ensure t
+  :straight t
   :bind (("C-h k" . helpful-key)
          ("C-h f" . helpful-callable)
          ("C-h v" . helpful-variable))
   :after (counsel))
 
 (use-package elisp-demos
-  :ensure t
+  :straight t
   :after (helpful)
   :config
   (advice-add 'helpful-update :after #'elisp-demos-advice-helpful-update))
