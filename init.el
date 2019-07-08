@@ -581,7 +581,8 @@
 
 (use-package apib-mode
   :ensure t
-  :mode ("\\.apib\\'" "\\.mson\\'")
+  :mode (("\\.apib\\'" . apib-mode)
+         ("\\.mson\\'" . apib-mode))
   :bind (:map apib-mode-map
               ("C-c C-a P" . apiary-publish)
               ("C-c C-a p" . apiary-preview-current-buffer)
