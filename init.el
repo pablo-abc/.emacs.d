@@ -238,6 +238,10 @@
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
 
+(straight-use-package 'org)
+(straight-use-package 'org-plus-contrib)
+(defvar org-confirm-babel-evaluate)
+(setq org-confirm-babel-evaluate nil)
 (straight-use-package 'use-package)
 (straight-use-package 'diminish)
 
