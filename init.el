@@ -775,6 +775,13 @@
 (use-package flycheck-joker
   :straight t)
 
+(use-package clj-refactor
+  :straight t
+  :hook ((clojure-mode . (lambda ()
+                           (clj-refactor-mode 1)
+                           (yas-minor-mode 1) ; for adding require/use/import statements
+                           (cljr-add-keybindings-with-prefix "C-c C-m")))))
+
 (use-package racket-mode
   :straight t)
 
