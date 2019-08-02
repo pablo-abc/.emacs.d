@@ -464,7 +464,16 @@
 
 (use-package ace-window
   :straight t
-  :bind ( "M-o" . ace-window))
+  :bind ("M-o" . ace-window))
+
+(use-package avy
+  :straight t
+  :bind ("C-'" . avy-goto-char-timer))
+
+(use-package dashboard
+  :straight t
+  :config
+  (dashboard-setup-startup-hook))
 
 (defun set-fill-column-80 ()
   "Set fill column to 80."
@@ -785,7 +794,27 @@
 (use-package racket-mode
   :straight t)
 
+;; Rust configuration
+;; ------------------------------------------------------------------------------
+(use-package rust-mode
+  :straight t)
+
+(use-package cargo
+  :straight t
+  :hook ((rust-mode . cargo-minor-mode)))
+
+(use-package racer
+  :straight t
+  :hook ((rust-mode . racer-mode)
+         (racer-mode . eldoc-mode)
+         (racer-mode . company-mode)))
+
+(use-package flycheck-rust
+  :straight t
+  :hook ((flycheck-mode . flycheck-rust-setup)))
+
 ;; Golang configuration
+;; ------------------------------------------------------------------------------
 (defun go-compile-and-run ()
   "Run and compile go program."
   (interactive)
@@ -1077,11 +1106,6 @@
 
 (add-hook 'after-init-hook #'global-flycheck-mode)
 (add-hook 'prog-mode-hook #'display-line-numbers-mode)
-
-(with-eval-after-load 'rust-mode
-  (if (fboundp 'flycheck-rust-setup)
-      (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
-    (error "Not defined: %s" "flycheck-rust-setup")))
 
 (setq-default indent-tabs-mode nil)
 (setq tab-width 2) ; or any other preferred value
