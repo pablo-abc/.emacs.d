@@ -222,6 +222,7 @@
   (add-hook 'prog-mode-hook
             #'add-fira-code-symbol-keywords))
 
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
 
 ;; Package manager configuration
 ;;---------------------------------------------------------------------------------
@@ -797,7 +798,9 @@
 ;; Rust configuration
 ;; ------------------------------------------------------------------------------
 (use-package rust-mode
-  :straight t)
+  :straight t
+  :config
+  (rust-enable-format-on-save))
 
 (use-package cargo
   :straight t
