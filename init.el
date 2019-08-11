@@ -471,11 +471,6 @@
   :straight t
   :bind ("C-'" . avy-goto-char-timer))
 
-(use-package dashboard
-  :straight t
-  :config
-  (dashboard-setup-startup-hook))
-
 (defun set-fill-column-80 ()
   "Set fill column to 80."
   (setq fill-column 80))
@@ -663,7 +658,9 @@
   :straight t)
 
 (use-package rjsx-mode
-  :straight t)
+  :straight t
+  :config
+  (setq js-indent-level 2))
 
 
 ;; TypeScript configuration
