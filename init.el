@@ -814,7 +814,9 @@
 
 (use-package flycheck-rust
   :straight t
-  :hook ((flycheck-mode . flycheck-rust-setup)))
+  :hook ((flycheck-mode . flycheck-rust-setup))
+  :config
+  (setq-default flycheck-disabled-checkers '(rust-cargo rust)))
 
 ;; Golang configuration
 ;; ------------------------------------------------------------------------------
