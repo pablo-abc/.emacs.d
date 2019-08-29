@@ -813,7 +813,8 @@
   :straight t
   :hook ((flycheck-mode . flycheck-rust-setup))
   :config
-  (setq-default flycheck-disabled-checkers '(rust-cargo rust)))
+  (flycheck-add-next-checker 'rust-cargo 'rust)
+  (flycheck-add-next-checker 'rust 'rust-clippy))
 
 ;; Golang configuration
 ;; ------------------------------------------------------------------------------
