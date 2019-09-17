@@ -352,6 +352,11 @@
 
 ;; Miscellaneous packages
 ;; ---------------------------------------------------------------------------------
+(use-package evil
+  :straight t
+  :config
+  (evil-mode 1))
+
 (use-package projectile
   :straight t
   :bind-keymap ("C-c p" . projectile-command-map)
