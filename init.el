@@ -608,8 +608,6 @@
 
 ;; JavaScript configuration
 ;;---------------------------------------------------------------------------------
-(load-file "~/.emacs.d/flow-for-emacs/flow.el")
-
 (use-package indium
   :straight t
   :hook (js2-mode . indium-interaction-mode))
