@@ -272,19 +272,19 @@
 (use-package dracula-theme
   :straight t)
 
-;; (use-package powerline
-;;   :straight t
-;;   :if (or (not (display-graphic-p)) (eq system-type 'darwin))
-;;   :config
-;;   (when (eq system-type 'darwin)
-;;     (setq powerline-image-apple-rgb t))
-;;   (powerline-center-theme))
+(use-package powerline
+  :straight t
+  :if (not (display-graphic-p))
+  :config
+  (when (eq system-type 'darwin)
+    (setq powerline-image-apple-rgb t))
+  (powerline-center-theme))
 
 (use-package telephone-line
   :straight t
-  ;; :if (and (display-graphic-p) (not (eq system-type 'darwin)))
+  :if (display-graphic-p)
   :config
-  (when (or (not (display-graphic-p)) (eq system-type 'darwin))
+  (when (eq system-type 'darwin)
       (setq ns-use-srgb-colorspace nil))
   (setq telephone-line-primary-left-separator 'telephone-line-cubed-left
         telephone-line-secondary-left-separator 'telephone-line-cubed-hollow-left
@@ -357,6 +357,10 @@
 (use-package evil
   :straight t
   :config
+  ;; :q should kill the current buffer rather than quitting emacs entirely
+  (evil-ex-define-cmd "q" 'kill-this-buffer)
+  ;; Need to type out :quit to close emacs
+  (evil-ex-define-cmd "quit" 'evil-quit)
   (evil-mode 1))
 
 (use-package projectile
@@ -818,8 +822,7 @@
   :straight t
   :hook ((flycheck-mode . flycheck-rust-setup))
   :config
-  (flycheck-add-next-checker 'rust-cargo 'rust)
-  (flycheck-add-next-checker 'rust 'rust-clippy))
+  (flycheck-add-next-checker 'rust-cargo 'rust-clippy))
 
 ;; Golang configuration
 ;; ------------------------------------------------------------------------------
