@@ -710,6 +710,8 @@
 (if (fboundp 'flycheck-add-mode)
     (flycheck-add-mode 'typescript-tslint 'web-mode)
   (error "Not defined: %s"  "flycheck-add-mode"))
+;; (when (fboundp 'flycheck-add-next-checker)
+;;   (flycheck-add-next-checker 'typescript-tide 'javascript-eslint))
 ;; aligns annotation to the right hand side
 (defvar typescript-indent-level)
 (setq typescript-indent-level 2)
@@ -722,6 +724,8 @@
   :bind (:map vue-mode-map
               ("C-c i" . vue-insert-template))
   :config
+  (setq mmm-js-mode-enter-hook (lambda () (setq syntax-ppss-table nil)))
+  (setq mmm-typescript-mode-enter-hook (lambda () (setq syntax-ppss-table nil)))
   (defun vue-insert-template ()
     "Insert template for a VueJS single file component."
     (interactive)
@@ -1209,3 +1213,15 @@ If the new path's directories does not exist, create them."
 
 (provide 'init)
 ;;; init.el ends here
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(safe-local-variable-values (quote ((cider-shadow-cljs-default-options . "app")))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
