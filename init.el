@@ -436,8 +436,22 @@
                          root))))
       (when (and eslint (file-executable-p eslint))
         (setq-local flycheck-javascript-eslint-executable eslint))))
+  (defun my/use-tslint-from-node-modules ()
+    "Get local eslint executable."
+    (let* ((root (locate-dominating-file
+                  (or (buffer-file-name) default-directory)
+                  "node_modules"))
+           (tslint (and root
+                        (expand-file-name
+                         "node_modules/tslint/bin/tslint"
+                         root))))
+      (when (and tslint (file-executable-p tslint))
+        (setq-local flycheck-typescript-tslint-executable tslint))))
   (if (fboundp 'my/use-eslint-from-node-modules)
       (add-hook 'flycheck-mode-hook #'my/use-eslint-from-node-modules)
+    (error "Not defined: %s"  "my/use-eslint-from-node-modules"))
+  (if (fboundp 'my/use-tslint-from-node-modules)
+      (add-hook 'flycheck-mode-hook #'my/use-tslint-from-node-modules)
     (error "Not defined: %s"  "my/use-eslint-from-node-modules"))
   ;; (flycheck-add-next-checker 'python-flake8 'python-mypy)
   )
