@@ -718,13 +718,16 @@
                 company-dabbrev-code-everywhere t)
   (setq company-auto-complete t)
   (defvar web-mode-enable-auto-quoting)
+  (when (fboundp 'flycheck-add-next-checker)
+    (flycheck-add-next-checker 'typescript-tide 'javascript-eslint)
+    (flycheck-add-next-checker 'tsx-tide 'javascript-eslint))
   :after (company flycheck))
 
 (if (fboundp 'flycheck-add-mode)
-    (flycheck-add-mode 'typescript-tslint 'web-mode)
+    (progn
+      (flycheck-add-mode 'typescript-tslint 'web-mode)
+      (flycheck-add-mode 'javascript-eslint 'web-mode))
   (error "Not defined: %s"  "flycheck-add-mode"))
-;; (when (fboundp 'flycheck-add-next-checker)
-;;   (flycheck-add-next-checker 'typescript-tide 'javascript-eslint))
 ;; aligns annotation to the right hand side
 (defvar typescript-indent-level)
 (setq typescript-indent-level 2)
