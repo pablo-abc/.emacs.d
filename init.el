@@ -639,14 +639,13 @@
          (go-mode . company-mode)))
 
 (use-package company-tern
-  :straight t
+  :straight (company-tern :type git :host github :repo "emacsmirror/company-tern")
   :config
   (add-to-list 'company-backends 'company-tern)
   :hook (js2-mode . tern-mode)
   :bind (:map tern-mode-keymap
               ("M-." . nil)
-              ("M-," . nil)
-              ))
+              ("M-," . nil)))
 
 (use-package js2-mode
   :straight t
