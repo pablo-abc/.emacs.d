@@ -684,6 +684,9 @@
   :config
   (setq js-indent-level 2))
 
+(use-package svelte-mode
+  :straight t)
+
 
 ;; TypeScript configuration
 ;;---------------------------------------------------------------------------------
