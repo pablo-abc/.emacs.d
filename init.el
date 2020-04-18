@@ -350,7 +350,8 @@
 (use-package langtool
   :straight t
   :init
-  (setq langtool-language-tool-jar "/home/pberganza/Downloads/LanguageTool-4.4/languagetool-commandline.jar"))
+  (setq langtool-language-tool-jar "/Users/PabloABC/Downloads/LanguageTool-4.9/languagetool-commandline.jar")
+  (setq langtool-java-user-arguments '("-Dfile.encoding=UTF-8")))
 
 ;; Miscellaneous packages
 ;; ---------------------------------------------------------------------------------
@@ -1151,6 +1152,21 @@
 (setq org-edit-src-content-indentation 0)
 ;; (defvar org-src-preserve-indentation)
 ;; (setq org-src-preserve-indentation 't)
+
+;; Writing configuration
+;; --------------------------------------------------------------------------------
+(use-package markdown-mode
+  :straight t
+  :config
+  (setq markdown-command "multimarkdown"))
+
+(use-package impatient-mode
+  :straight t
+  :config
+  (defun markdown-html (buffer)
+    (princ (with-current-buffer buffer
+             (format "<!DOCTYPE html><html><title>Impatient Markdown</title><xmp theme=\"united\" style=\"display:none;\"> %s  </xmp><script src=\"http://strapdownjs.com/v/0.2/strapdown.js\"></script></html>" (buffer-substring-no-properties (point-min) (point-max))))
+           (current-buffer))))
 
 ;; Help configuration
 ;;---------------------------------------------------------------------------------
