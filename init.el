@@ -430,7 +430,7 @@
     "Get local eslint executable."
     (let* ((root (locate-dominating-file
                   (or (buffer-file-name) default-directory)
-                  "node_modules"))
+                  "package.json"))
            (eslint (and root
                         (expand-file-name
                          "node_modules/eslint/bin/eslint.js"
@@ -441,7 +441,7 @@
     "Get local eslint executable."
     (let* ((root (locate-dominating-file
                   (or (buffer-file-name) default-directory)
-                  "node_modules"))
+                  "package.json"))
            (tslint (and root
                         (expand-file-name
                          "node_modules/tslint/bin/tslint"
@@ -730,7 +730,8 @@
 (if (fboundp 'flycheck-add-mode)
     (progn
       (flycheck-add-mode 'typescript-tslint 'web-mode)
-      (flycheck-add-mode 'javascript-eslint 'web-mode))
+      (flycheck-add-mode 'javascript-eslint 'web-mode)
+      (flycheck-add-mode 'javascript-eslint 'svelte-mode))
   (error "Not defined: %s"  "flycheck-add-mode"))
 ;; aligns annotation to the right hand side
 (defvar typescript-indent-level)
