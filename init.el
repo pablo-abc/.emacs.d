@@ -350,8 +350,11 @@
 (use-package langtool
   :straight t
   :init
-  (setq langtool-language-tool-jar "/Users/PabloABC/Downloads/LanguageTool-4.9/languagetool-commandline.jar")
-  (setq langtool-java-user-arguments '("-Dfile.encoding=UTF-8")))
+  (setq langtool-language-tool-jar "/Users/PabloABC/Downloads/LanguageTool-4.8/languagetool-commandline.jar")
+  (setq langtool-java-user-arguments '("-Dfile.encoding=UTF-8"))
+  (setq langtool-user-arguments
+        '("--languagemodel"
+          "/Users/PabloABC/Downloads/LanguageTool-4.9/n-grams/")))
 
 ;; Miscellaneous packages
 ;; ---------------------------------------------------------------------------------
@@ -688,6 +691,11 @@
 (use-package svelte-mode
   :straight t)
 
+(use-package prettier-js
+  :straight t
+  :hook ((js2-mode . prettier-js-mode)
+          (web-mode . prettier-js-mode)
+          (typescript . prettier-js-mode)))
 
 ;; TypeScript configuration
 ;;---------------------------------------------------------------------------------
