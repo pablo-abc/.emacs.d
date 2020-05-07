@@ -691,11 +691,26 @@
 (use-package svelte-mode
   :straight t)
 
+(defun enable-prettier-minor-mode (my-pair)
+  "Enable minor mode if filename match the regexp.  MY-PAIR is a cons cell (regexp . minor-mode)."
+  (if (buffer-file-name)
+      (if (string-match (car my-pair) buffer-file-name)
+      (funcall (cdr my-pair)))))
+
 (use-package prettier-js
   :straight t
   :hook ((js2-mode . prettier-js-mode)
-          (web-mode . prettier-js-mode)
-          (typescript . prettier-js-mode)))
+         (web-mode . prettier-js-mode)
+         (typescript . prettier-js-mode)
+         (web-mode . (lambda ()
+                       (enable-prettier-minor-mode
+                        '("\\.jsx?\\|\\.tsx?\\'" . prettier-js-mode))))))
+
+(use-package add-node-modules-path
+  :straight t
+  :hook ((js-mode . add-node-modules-path)
+         (js2-mode . add-node-modules-path)
+         (typescript-mode . add-node-modules-path)))
 
 ;; TypeScript configuration
 ;;---------------------------------------------------------------------------------
@@ -720,8 +735,7 @@
          (web-mode . (lambda ()
 		       (when (string-equal
                               "tsx" (file-name-extension buffer-file-name))
-		         (setup-tide-mode))))
-         (before-save . tide-format-before-save))
+		         (setup-tide-mode)))))
   :config
   (setq tide-format-options
         '(:indentSize 2 :tabSize 2))
