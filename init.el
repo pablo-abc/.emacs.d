@@ -710,7 +710,10 @@
   :straight t
   :hook ((js-mode . add-node-modules-path)
          (js2-mode . add-node-modules-path)
-         (typescript-mode . add-node-modules-path)))
+         (typescript-mode . add-node-modules-path)
+         (web-mode . (lambda ()
+                       (enable-prettier-minor-mode
+                        '("\\.jsx?\\'\\|\\.tsx?\\'" . add-node-modules-path))))))
 
 ;; TypeScript configuration
 ;;---------------------------------------------------------------------------------
