@@ -270,7 +270,8 @@
 ;;     (moe-light)))
 
 (use-package dracula-theme
-  :straight t)
+  :straight t
+  :hook (after-init . (load-theme 'dracula)))
 
 (use-package powerline
   :straight t
@@ -643,7 +644,7 @@
          (go-mode . company-mode)))
 
 (use-package company-tern
-  :straight (company-tern :type git :host github :repo "emacsmirror/company-tern")
+  :straight (company-tern :type git :host github :repo "emacsattic/company-tern")
   :config
   (add-to-list 'company-backends 'company-tern)
   :hook (js2-mode . tern-mode)
@@ -1279,6 +1280,9 @@ If the new path's directories does not exist, create them."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   (quote
+    ("13fa7a304bd53aa4c0beec4c25c4f811de499bce9deb326798265ed0015b3b78" default)))
  '(safe-local-variable-values (quote ((cider-shadow-cljs-default-options . "app")))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
