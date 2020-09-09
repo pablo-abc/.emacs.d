@@ -271,7 +271,7 @@
 
 (use-package dracula-theme
   :straight t
-  :hook (after-init . (load-theme 'dracula)))
+  :hook (after-init . (lambda () (load-theme 'dracula))))
 
 (use-package powerline
   :straight t
@@ -1171,8 +1171,8 @@
 
 (setq-default indent-tabs-mode nil)
 (setq tab-width 2) ; or any other preferred value
-(defvaralias 'c-basic-offset 'tab-width)
-(defvaralias 'cperl-indent-level 'tab-width)
+(setq c-basic-offset tab-width)
+(setq cperl-indent-level tab-width)
 (defvar org-log-done)
 (setq org-log-done t)
 (defvar org-edit-src-content-indentation)
@@ -1281,9 +1281,8 @@ If the new path's directories does not exist, create them."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
-   (quote
-    ("13fa7a304bd53aa4c0beec4c25c4f811de499bce9deb326798265ed0015b3b78" default)))
- '(safe-local-variable-values (quote ((cider-shadow-cljs-default-options . "app")))))
+   '("24714e2cb4a9d6ec1335de295966906474fdb668429549416ed8636196cb1441" "13fa7a304bd53aa4c0beec4c25c4f811de499bce9deb326798265ed0015b3b78" default))
+ '(safe-local-variable-values '((cider-shadow-cljs-default-options . "app"))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
