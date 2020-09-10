@@ -703,6 +703,7 @@
   :hook ((js2-mode . prettier-js-mode)
          (web-mode . prettier-js-mode)
          (typescript-mode . prettier-js-mode)
+         (svelte-mode . prettier-js-mode)
          (web-mode . (lambda ()
                        (enable-prettier-minor-mode
                         '("\\.jsx?\\'\\|\\.tsx?\\'" . prettier-js-mode))))))
@@ -712,6 +713,7 @@
   :hook ((js-mode . add-node-modules-path)
          (js2-mode . add-node-modules-path)
          (typescript-mode . add-node-modules-path)
+         (svelte-mode . add-node-modules-path)
          (web-mode . (lambda ()
                        (enable-prettier-minor-mode
                         '("\\.jsx?\\'\\|\\.tsx?\\'" . add-node-modules-path))))))
