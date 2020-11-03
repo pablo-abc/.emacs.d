@@ -706,7 +706,9 @@
          (svelte-mode . prettier-js-mode)
          (web-mode . (lambda ()
                        (enable-prettier-minor-mode
-                        '("\\.jsx?\\'\\|\\.tsx?\\'" . prettier-js-mode))))))
+                        '("\\.jsx?\\'\\|\\.tsx?\\'" . prettier-js-mode)))))
+  :config
+  (add-to-list 'lsp-language-id-configuration '(svelte-mode . "typescript")))
 
 (use-package add-node-modules-path
   :straight t
@@ -714,6 +716,7 @@
          (js2-mode . add-node-modules-path)
          (typescript-mode . add-node-modules-path)
          (svelte-mode . add-node-modules-path)
+         (svelte-mode . lsp)
          (web-mode . (lambda ()
                        (enable-prettier-minor-mode
                         '("\\.jsx?\\'\\|\\.tsx?\\'" . add-node-modules-path))))))
@@ -811,12 +814,6 @@
 ;; (use-package lsp-vue
 ;;   :straight t
 ;;   :hook (vue-mode . lsp-vue-mmm-enable))
-
-(use-package company-lsp
-  :straight t
-  :config
-  (add-to-list 'company-backends 'company-lsp)
-  :after (company))
 
 ;; Lisp configuration
 ;;---------------------------------------------------------------------------------
@@ -1283,7 +1280,7 @@ If the new path's directories does not exist, create them."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
-   '("24714e2cb4a9d6ec1335de295966906474fdb668429549416ed8636196cb1441" "13fa7a304bd53aa4c0beec4c25c4f811de499bce9deb326798265ed0015b3b78" default))
+   '("7451f243a18b4b37cabfec57facc01bd1fe28b00e101e488c61e1eed913d9db9" "24714e2cb4a9d6ec1335de295966906474fdb668429549416ed8636196cb1441" "13fa7a304bd53aa4c0beec4c25c4f811de499bce9deb326798265ed0015b3b78" default))
  '(safe-local-variable-values '((cider-shadow-cljs-default-options . "app"))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
