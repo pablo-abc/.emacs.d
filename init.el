@@ -690,7 +690,8 @@
   (setq js-indent-level 2))
 
 (use-package svelte-mode
-  :straight t)
+  :straight t
+  :mode (("\\.svx\\'" . svelte-mode)))
 
 (defun enable-prettier-minor-mode (my-pair)
   "Enable minor mode if filename match the regexp.  MY-PAIR is a cons cell (regexp . minor-mode)."
@@ -708,7 +709,7 @@
                        (enable-prettier-minor-mode
                         '("\\.jsx?\\'\\|\\.tsx?\\'" . prettier-js-mode)))))
   :config
-  (add-to-list 'lsp-language-id-configuration '(svelte-mode . "typescript")))
+  (add-to-list 'lsp-language-id-configuration '(svelte-mode . "html")))
 
 (use-package add-node-modules-path
   :straight t
@@ -716,7 +717,6 @@
          (js2-mode . add-node-modules-path)
          (typescript-mode . add-node-modules-path)
          (svelte-mode . add-node-modules-path)
-         (svelte-mode . lsp)
          (web-mode . (lambda ()
                        (enable-prettier-minor-mode
                         '("\\.jsx?\\'\\|\\.tsx?\\'" . add-node-modules-path))))))
@@ -804,6 +804,7 @@
   (setq vue-html-extra-indent 2))
 
 (use-package lsp-mode
+  :hook ((svelte-mode . lsp))
   :straight t)
 
 (use-package lsp-ui
