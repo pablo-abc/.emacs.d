@@ -691,25 +691,29 @@
 
 (use-package svelte-mode
   :straight t
-  :mode (("\\.svx\\'" . svelte-mode)))
-
-(defun enable-prettier-minor-mode (my-pair)
-  "Enable minor mode if filename match the regexp.  MY-PAIR is a cons cell (regexp . minor-mode)."
-  (if (buffer-file-name)
-      (if (string-match (car my-pair) buffer-file-name)
-      (funcall (cdr my-pair)))))
-
-(use-package prettier-js
-  :straight t
-  :hook ((js2-mode . prettier-js-mode)
-         (web-mode . prettier-js-mode)
-         (typescript-mode . prettier-js-mode)
-         (svelte-mode . prettier-js-mode)
-         (web-mode . (lambda ()
-                       (enable-prettier-minor-mode
-                        '("\\.jsx?\\'\\|\\.tsx?\\'" . prettier-js-mode)))))
+  :mode (("\\.svx\\'" . svelte-mode))
   :config
   (add-to-list 'lsp-language-id-configuration '(svelte-mode . "html")))
+
+;; (defun enable-prettier-minor-mode (my-pair)
+;;   "Enable minor mode if filename match the regexp.  MY-PAIR is a cons cell (regexp . minor-mode)."
+;;   (if (buffer-file-name)
+;;       (if (string-match (car my-pair) buffer-file-name)
+;;       (funcall (cdr my-pair)))))
+
+;; (use-package prettier-js
+;;   :straight t
+;;   :hook ((js2-mode . prettier-js-mode)
+;;          (web-mode . prettier-js-mode)
+;;          (typescript-mode . prettier-js-mode)
+;;          (svelte-mode . prettier-js-mode)
+;;          (web-mode . (lambda ()
+;;                        (enable-prettier-minor-mode
+;;                         '("\\.jsx?\\'\\|\\.tsx?\\'" . prettier-js-mode))))))
+
+;; (use-package prettier
+;;   :straight t
+;;   :hook ((after-init . global-prettier-mode)))
 
 (use-package add-node-modules-path
   :straight t
