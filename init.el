@@ -737,15 +737,18 @@
 ;;   :straight t
 ;;   :hook ((after-init . global-prettier-mode)))
 
+(use-package prettier
+  :straight t
+  :hook ((js-mode . prettier-mode)
+         (js2-mode . prettier-mode)
+         (typescript-mode . prettier-mode)))
+
 (use-package add-node-modules-path
   :straight t
   :hook ((js-mode . add-node-modules-path)
          (js2-mode . add-node-modules-path)
          (typescript-mode . add-node-modules-path)
-         (svelte-mode . add-node-modules-path)
-         (web-mode . (lambda ()
-                       (enable-prettier-minor-mode
-                        '("\\.jsx?\\'\\|\\.tsx?\\'" . add-node-modules-path))))))
+         (svelte-mode . add-node-modules-path)))
 
 ;; TypeScript configuration
 ;;---------------------------------------------------------------------------------
