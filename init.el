@@ -361,9 +361,16 @@
 
 ;; Miscellaneous packages
 ;; ---------------------------------------------------------------------------------
-(use-package evil
+(use-package undo-tree
   :straight t
   :config
+  (global-undo-tree-mode))
+
+(use-package evil
+  :straight t
+  :after (undo-tree)
+  :config
+  (evil-set-undo-system 'undo-tree)
   ;; :q should kill the current buffer rather than quitting emacs entirely
   (evil-ex-define-cmd "q" 'kill-this-buffer)
   ;; Need to type out :quit to close emacs
@@ -431,6 +438,13 @@
 (use-package css-mode
   :config
   (setq css-indent-offset 2))
+
+(use-package sass-mode
+  :straight t)
+
+(use-package rainbow-mode
+  :straight t
+  :hook ((sass-mode . rainbow-mode)))
 
 (use-package flycheck
   :straight t
@@ -655,11 +669,13 @@
 ;;---------------------------------------------------------------------------------
 (use-package indium
   :straight t
-  :hook (js2-mode . indium-interaction-mode))
+  :hook ((js2-mode . indium-interaction-mode)
+         (js-mode . indium-interaction-mode)))
 
 (use-package company
   :straight t
   :hook ((js2-mode . company-mode)
+         (js-mode . company-mode)
          (vue-mode . company-mode)
          (cider-repl-mode . company-mode)
          (cider-mode . company-mode)
@@ -669,14 +685,17 @@
   :straight (company-tern :type git :host github :repo "emacsattic/company-tern")
   :config
   (add-to-list 'company-backends 'company-tern)
-  :hook (js2-mode . tern-mode)
+  :hook ((js2-mode . tern-mode)
+         (js-mode . tern-mode))
   :bind (:map tern-mode-keymap
               ("M-." . nil)
               ("M-," . nil)))
 
+(use-package js-mode
+  :mode "\\.js\\'")
+
 (use-package js2-mode
   :straight t
-  :mode "\\.js\\'"
   :bind (:map js2-mode-map
               ("C-k" . js2r-kill))
   :config
@@ -716,26 +735,6 @@
   :mode (("\\.svx\\'" . svelte-mode))
   :config
   (add-to-list 'lsp-language-id-configuration '(svelte-mode . "html")))
-
-;; (defun enable-prettier-minor-mode (my-pair)
-;;   "Enable minor mode if filename match the regexp.  MY-PAIR is a cons cell (regexp . minor-mode)."
-;;   (if (buffer-file-name)
-;;       (if (string-match (car my-pair) buffer-file-name)
-;;       (funcall (cdr my-pair)))))
-
-;; (use-package prettier-js
-;;   :straight t
-;;   :hook ((js2-mode . prettier-js-mode)
-;;          (web-mode . prettier-js-mode)
-;;          (typescript-mode . prettier-js-mode)
-;;          (svelte-mode . prettier-js-mode)
-;;          (web-mode . (lambda ()
-;;                        (enable-prettier-minor-mode
-;;                         '("\\.jsx?\\'\\|\\.tsx?\\'" . prettier-js-mode))))))
-
-;; (use-package prettier
-;;   :straight t
-;;   :hook ((after-init . global-prettier-mode)))
 
 (use-package prettier
   :straight t
