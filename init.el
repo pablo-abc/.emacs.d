@@ -692,7 +692,7 @@
               ("M-," . nil)))
 
 (use-package js-mode
-  :mode "\\.js\\'")
+  :mode "\\.c?js\\'")
 
 (use-package js2-mode
   :straight t
@@ -1135,10 +1135,6 @@
 ;;---------------------------------------------------------------------------------
 (use-package haskell-mode
   :straight t)
-
-(use-package intero
-  :straight t
-  :hook (haskell-mode . intero-mode))
 
 ;; GraphQL configuration
 ;; --------------------------------------------------------------------------------
