@@ -242,7 +242,6 @@
   (load bootstrap-file nil 'nomessage))
 
 (straight-use-package 'org)
-(straight-use-package 'org-plus-contrib)
 (defvar org-confirm-babel-evaluate)
 (setq org-confirm-babel-evaluate nil)
 (straight-use-package 'use-package)
@@ -296,17 +295,6 @@
   (setq telephone-line-height 24
         telephone-line-evil-use-short-tag t)
   (telephone-line-mode 1))
-
-;; (use-package nyan-mode
-;;   :straight t
-;;   :if (display-graphic-p)
-;;   :config
-;;   (when (fboundp 'nyan-mode)
-;;     (nyan-mode))
-;;   (when (fboundp 'nyan-toggle-wavy-trail)
-;;     (nyan-toggle-wavy-trail))
-;;   (when (fboundp 'nyan-start-animation)
-;;     (nyan-start-animation)))
 
 (use-package dimmer
   :straight t)
@@ -740,7 +728,16 @@
   :straight t
   :hook ((js-mode . prettier-mode)
          (js2-mode . prettier-mode)
-         (typescript-mode . prettier-mode)))
+         (typescript-mode . prettier-mode)
+         (svelte-mode . prettier-mode)
+         (web-mode . (lambda ()
+		       (when
+                           (or
+                            (string-equal
+                             "tsx" (file-name-extension buffer-file-name))
+                            (string-equal
+                             "jsx" (file-name-extension buffer-file-name)))
+		         (prettier-mode))))))
 
 (use-package add-node-modules-path
   :straight t
@@ -1113,7 +1110,33 @@
   :straight t)
 
 (use-package polymode
-  :straight t)
+  :straight t
+  :mode ("\\.astro\\'" . poly-astro)
+  :config
+  (define-hostmode poly-astro-hostmode :mode 'web-mode)
+  (define-innermode poly-astro-fm-innermode
+    :mode 'js-mode
+    :head-matcher "^---\n"
+    :tail-matcher "^---"
+    :head-mode 'host
+    :tail-mode 'host)
+  (define-auto-innermode poly-astro-style-tag-lang-innermode
+    :head-matcher "<[[:space:]]*style[[:space:]]*lang=[[:space:]]*[\"'][[:space:]]*[[:alpha:]]+[[:space:]]*[\"'][[:space:]]*>"
+    :tail-matcher "</[[:space:]]*style[[:space:]]*[[:space:]]*>"
+    :mode-matcher (cons  "<[[:space:]]*style[[:space:]]*lang=[[:space:]]*[\"'][[:space:]]*\\([[:alpha:]]+\\)[[:space:]]*[\"'][[:space:]]*>" 1)
+    :head-mode 'host
+    :tail-mode 'host)
+  (define-innermode poly-astro-style-innermode
+    :mode 'css-mode
+    :head-matcher "<[[:space:]]*style[[:space:]]*[[:space:]]*>"
+    :tail-matcher "</[[:space:]]*style[[:space:]]*[[:space:]]*>"
+    :head-mode 'host
+    :tail-mode 'host)
+  (define-polymode poly-astro
+    :hostmode 'poly-astro-hostmode
+    :innermodes '(poly-astro-fm-innermode
+                  poly-astro-style-tag-lang-innermode
+                  poly-astro-style-innermode)))
 
 (use-package poly-R
   :straight t)
@@ -1305,7 +1328,7 @@ If the new path's directories does not exist, create them."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
-   '("7451f243a18b4b37cabfec57facc01bd1fe28b00e101e488c61e1eed913d9db9" "24714e2cb4a9d6ec1335de295966906474fdb668429549416ed8636196cb1441" "13fa7a304bd53aa4c0beec4c25c4f811de499bce9deb326798265ed0015b3b78" default))
+   '("549ccbd11c125a4e671a1e8d3609063a91228e918ffb269e57bd2cd2c0a6f1c6" "81c3de64d684e23455236abde277cda4b66509ef2c28f66e059aa925b8b12534" "2dff5f0b44a9e6c8644b2159414af72261e38686072e063aa66ee98a2faecf0e" "7451f243a18b4b37cabfec57facc01bd1fe28b00e101e488c61e1eed913d9db9" "24714e2cb4a9d6ec1335de295966906474fdb668429549416ed8636196cb1441" "13fa7a304bd53aa4c0beec4c25c4f811de499bce9deb326798265ed0015b3b78" default))
  '(safe-local-variable-values '((cider-shadow-cljs-default-options . "app"))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
