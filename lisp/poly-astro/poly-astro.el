@@ -1,9 +1,21 @@
 ;;; poly-astro.el --- a polymode for astro files
 
-;;; commentary:
+;; Copyright (C) 2021  Pablo Berganza
 
-;;; Requires polymode
-;;; Requires web-mode
+;; Author: Pablo Berganza <pablo@berganza.dev>
+;; Version: 0.0.1
+;; Package-Requires: ((polymode "0.2.2") (web-mode "17.0.4"))
+;; Keywords: astro poly polymode
+;; URL: https://github.com/pablo-abc/.emacs.d/tree/master/lisp/poly-astro
+
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;; Commentary:
+
+;; A poly mode for .astro files for https://astro.build.
+;; It currently works ok-ish for general purposes.
+;; Syntax highlighting sometimes does not appear until you start
+;; typing, but it is generally useable.
 
 ;;; code:
 (require 'polymode)
