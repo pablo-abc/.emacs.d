@@ -26,8 +26,8 @@
   :mode 'js-mode
   :head-matcher "\\`[ \t\n]*---\n"
   :tail-matcher "^---\n"
-  :head-mode 'host
-  :tail-mode 'host)
+  :head-mode 'fundamental-mode
+  :tail-mode 'fundamental-mode)
 (define-auto-innermode poly-astro-style-tag-lang-innermode
   :head-matcher "<[[:space:]]*style[[:space:]]*lang=[[:space:]]*[\"'][[:space:]]*[[:alpha:]]+[[:space:]]*[\"'][[:space:]]*>\n"
   :tail-matcher "</[[:space:]]*style[[:space:]]*[[:space:]]*>"
