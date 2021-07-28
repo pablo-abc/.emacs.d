@@ -1110,39 +1110,17 @@
   :straight t)
 
 (use-package polymode
-  :straight t
-  :mode ("\\.astro\\'" . poly-astro)
-  :config
-  (define-hostmode poly-astro-hostmode :mode 'web-mode)
-  (define-innermode poly-astro-fm-innermode
-    :mode 'js-mode
-    :head-matcher "^---\n"
-    :tail-matcher "^---"
-    :head-mode 'host
-    :tail-mode 'host)
-  (define-auto-innermode poly-astro-style-tag-lang-innermode
-    :head-matcher "<[[:space:]]*style[[:space:]]*lang=[[:space:]]*[\"'][[:space:]]*[[:alpha:]]+[[:space:]]*[\"'][[:space:]]*>"
-    :tail-matcher "</[[:space:]]*style[[:space:]]*[[:space:]]*>"
-    :mode-matcher (cons  "<[[:space:]]*style[[:space:]]*lang=[[:space:]]*[\"'][[:space:]]*\\([[:alpha:]]+\\)[[:space:]]*[\"'][[:space:]]*>" 1)
-    :head-mode 'host
-    :tail-mode 'host)
-  (define-innermode poly-astro-style-innermode
-    :mode 'css-mode
-    :head-matcher "<[[:space:]]*style[[:space:]]*[[:space:]]*>"
-    :tail-matcher "</[[:space:]]*style[[:space:]]*[[:space:]]*>"
-    :head-mode 'host
-    :tail-mode 'host)
-  (define-polymode poly-astro
-    :hostmode 'poly-astro-hostmode
-    :innermodes '(poly-astro-fm-innermode
-                  poly-astro-style-tag-lang-innermode
-                  poly-astro-style-innermode)))
+  :straight t)
 
 (use-package poly-R
   :straight t)
 
 (use-package poly-markdown
   :straight t)
+
+(use-package poly-astro
+  :load-path "~/.emacs.d/lisp/poly-astro"
+  :mode ("\\.astro\\'" . poly-astro))
 
 ;; C# configuration
 ;; --------------------------------------------------------------------------------
