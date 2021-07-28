@@ -2,8 +2,8 @@
 
 ;;; commentary:
 
-;;; Needs polymode
-;;; Requires requires web-mode
+;;; Requires polymode
+;;; Requires web-mode
 
 ;;; code:
 (require 'polymode)
