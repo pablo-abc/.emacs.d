@@ -1119,7 +1119,7 @@
   :straight t)
 
 (use-package poly-astro
-  :load-path "~/.emacs.d/lisp/poly-astro"
+  :straight (poly-astro :type git :host github :repo "pablo-abc/poly-astro")
   :mode ("\\.astro\\'" . poly-astro))
 
 ;; C# configuration
