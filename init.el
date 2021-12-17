@@ -546,6 +546,9 @@
   (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
   (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this))
 
+(use-package package-lint
+  :straight t)
+
 ;; Docker configuration
 ;;---------------------------------------------------------------------------------
 (use-package dockerfile-mode
@@ -680,7 +683,7 @@
               ("M-," . nil)))
 
 (use-package js-mode
-  :mode "\\.c?js\\'")
+  :mode "\\.\\(m\\|c\\)?js\\'")
 
 (use-package js2-mode
   :straight t
@@ -713,11 +716,6 @@
 (use-package json-mode
   :straight t)
 
-(use-package rjsx-mode
-  :straight t
-  :config
-  (setq js-indent-level 2))
-
 (use-package svelte-mode
   :straight t
   :mode (("\\.svx\\'" . svelte-mode))
@@ -729,7 +727,6 @@
   :hook ((js-mode . prettier-mode)
          (js2-mode . prettier-mode)
          (typescript-mode . prettier-mode)
-         (svelte-mode . prettier-mode)
          (web-mode . (lambda ()
 		       (when
                            (or
@@ -950,6 +947,22 @@
   (add-to-list 'company-backends 'company-go)
   :after (company))
 
+;; Flutter configuration
+;; ------------------------------------------------------------------------------
+
+(use-package dart-mode
+  :straight t)
+
+(use-package flutter
+  :straight t
+  :bind (:map dart-mode-map
+              ("C-M-x" . #'flutter-run-or-hot-reload)))
+
+(use-package lsp-dart
+  :straight t
+  :hook (dart-mode . lsp-mode)
+  :after (lsp-mode))
+
 ;; Octave configuration
 ;;---------------------------------------------------------------------------------
 (use-package octave-mode
@@ -1120,7 +1133,9 @@
 
 (use-package poly-astro
   :straight (poly-astro :type git :host github :repo "pablo-abc/poly-astro")
-  :mode ("\\.astro\\'" . poly-astro))
+  :mode ("\\.astro\\'" . poly-astro)
+  :config
+  (setq-default flycheck-disabled-checkers '(html-tidy)))
 
 ;; C# configuration
 ;; --------------------------------------------------------------------------------
@@ -1306,7 +1321,7 @@ If the new path's directories does not exist, create them."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
-   '("549ccbd11c125a4e671a1e8d3609063a91228e918ffb269e57bd2cd2c0a6f1c6" "81c3de64d684e23455236abde277cda4b66509ef2c28f66e059aa925b8b12534" "2dff5f0b44a9e6c8644b2159414af72261e38686072e063aa66ee98a2faecf0e" "7451f243a18b4b37cabfec57facc01bd1fe28b00e101e488c61e1eed913d9db9" "24714e2cb4a9d6ec1335de295966906474fdb668429549416ed8636196cb1441" "13fa7a304bd53aa4c0beec4c25c4f811de499bce9deb326798265ed0015b3b78" default))
+   '("18bec4c258b4b4fb261671cf59197c1c3ba2a7a47cc776915c3e8db3334a0d25" "549ccbd11c125a4e671a1e8d3609063a91228e918ffb269e57bd2cd2c0a6f1c6" "81c3de64d684e23455236abde277cda4b66509ef2c28f66e059aa925b8b12534" "2dff5f0b44a9e6c8644b2159414af72261e38686072e063aa66ee98a2faecf0e" "7451f243a18b4b37cabfec57facc01bd1fe28b00e101e488c61e1eed913d9db9" "24714e2cb4a9d6ec1335de295966906474fdb668429549416ed8636196cb1441" "13fa7a304bd53aa4c0beec4c25c4f811de499bce9deb326798265ed0015b3b78" default))
  '(safe-local-variable-values '((cider-shadow-cljs-default-options . "app"))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
