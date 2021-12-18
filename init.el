@@ -491,6 +491,10 @@
 ;;   :config
 ;;   (flycheck-clojure-setup))
 
+(use-package flycheck-popup-tip
+  :straight t
+  :hook ((flycheck-mode . flycheck-popup-tip-mode)))
+
 (use-package objed
   :straight t)
 
@@ -672,16 +676,6 @@
          (cider-mode . company-mode)
          (go-mode . company-mode)))
 
-(use-package company-tern
-  :straight (company-tern :type git :host github :repo "emacsattic/company-tern")
-  :config
-  (add-to-list 'company-backends 'company-tern)
-  :hook ((js2-mode . tern-mode)
-         (js-mode . tern-mode))
-  :bind (:map tern-mode-keymap
-              ("M-." . nil)
-              ("M-," . nil)))
-
 (use-package js-mode
   :mode "\\.\\(m\\|c\\)?js\\'")
 
@@ -826,7 +820,8 @@
   (setq vue-html-extra-indent 2))
 
 (use-package lsp-mode
-  :hook ((svelte-mode . lsp))
+  :hook ((svelte-mode . lsp)
+         (js-mode . lsp))
   :straight t)
 
 (use-package lsp-ui
@@ -1071,7 +1066,11 @@
          ("C-S-o" . counsel-rhythmbox)
          :map minibuffer-local-map
          ("C-r" . counsel-minibuffer-history))
-  :after (ag))
+  :after (ag evil)
+  :init
+  (evil-ex-define-cmd "mx" 'counsel-M-x)
+  (define-key evil-normal-state-map (kbd "/") 'counsel-grep-or-swiper))
+
 
 (use-package ag
   :straight t)
