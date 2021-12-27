@@ -357,6 +357,9 @@
 (use-package evil
   :straight t
   :after (undo-tree)
+  :init
+  (setq evil-want-integration t) ;; This is optional since it's already set to t by default.
+  (setq evil-want-keybinding nil)
   :config
   (evil-set-undo-system 'undo-tree)
   ;; :q should kill the current buffer rather than quitting emacs entirely
@@ -364,6 +367,13 @@
   ;; Need to type out :quit to close emacs
   (evil-ex-define-cmd "quit" 'evil-quit)
   (evil-mode 1))
+
+(use-package evil-collection
+  :straight t
+  :diminish
+  :after (evil)
+  :config
+  (evil-collection-init))
 
 (use-package projectile
   :straight t
@@ -433,6 +443,9 @@
 (use-package rainbow-mode
   :straight t
   :hook ((sass-mode . rainbow-mode)))
+
+(use-package dirvish
+  :straight t)
 
 (use-package flycheck
   :straight t
@@ -829,6 +842,9 @@
   :config
   (add-to-list 'flycheck-checkers 'lsp-ui))
 
+(use-package lsp-ivy
+  :straight t)
+
 ;; (use-package lsp-vue
 ;;   :straight t
 ;;   :hook (vue-mode . lsp-vue-mmm-enable))
@@ -844,6 +860,11 @@
          (scheme-mode . lispy-mode))
   :config
   (add-to-list 'lispy-compat 'cider))
+
+(use-package lispyville
+  :straight t
+  :diminish
+  :hook ((lispy-mode . lispyville-mode)))
 
 ;; Clojure configuration
 ;;---------------------------------------------------------------------------------
@@ -1071,6 +1092,16 @@
   (evil-ex-define-cmd "mx" 'counsel-M-x)
   (define-key evil-normal-state-map (kbd "/") 'counsel-grep-or-swiper))
 
+(use-package prescient
+  :straight t
+  :diminish)
+
+(use-package ivy-prescient
+  :straight t
+  :diminish
+  :after (counsel)
+  :config
+  (ivy-prescient-mode))
 
 (use-package ag
   :straight t)
