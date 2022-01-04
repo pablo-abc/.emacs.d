@@ -780,7 +780,6 @@
   (setq-default company-dabbrev-other-buffers 'all
                 company-tooltip-align-annotations t
                 company-dabbrev-code-everywhere t)
-  (setq company-auto-complete t)
   (defvar web-mode-enable-auto-quoting)
   (when (fboundp 'flycheck-add-next-checker)
     (flycheck-add-next-checker 'typescript-tide 'javascript-eslint)
