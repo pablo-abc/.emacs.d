@@ -449,6 +449,7 @@
 
 (use-package flycheck
   :straight t
+  :hook ((prog-mode . flycheck-mode))
   :config
   ;; https://emacs.stackexchange.com/questions/21205/flycheck-with-file-relative-eslint-executable
   (defun my/use-eslint-from-node-modules ()
@@ -1235,7 +1236,6 @@
         (sequence "FIX(f)" "HOLD(h)" "|" "DONE(d)" "CANCELLED(x)")
         ))
 
-(add-hook 'after-init-hook #'global-flycheck-mode)
 (add-hook 'prog-mode-hook #'display-line-numbers-mode)
 
 (setq-default indent-tabs-mode nil)
@@ -1253,7 +1253,7 @@
 ;; --------------------------------------------------------------------------------
 (use-package markdown-mode
   :straight t
-  :config
+  :init
   (setq markdown-command "multimarkdown"))
 
 (use-package impatient-mode
