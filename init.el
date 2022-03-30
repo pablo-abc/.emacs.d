@@ -253,13 +253,6 @@
   :straight t
   :hook (prog-mode . rainbow-delimiters-mode))
 
-(use-package zone
-  :diminish
-  :if (display-graphic-p)
-  :config
-  (when (fboundp 'zone-when-idle)
-    (zone-when-idle 300)))
-
 ;; (use-package moe-theme
 ;;   :straight t
 ;;   :config
@@ -312,6 +305,33 @@
 
 ;; MacOS configuration
 ;; ---------------------------------------------------------------------------------
+;; Keybonds
+(global-set-key [(hyper a)] 'mark-whole-buffer)
+(global-set-key [(hyper v)] 'yank)
+(global-set-key [(hyper c)] 'kill-ring-save)
+(global-set-key [(hyper s)] 'save-buffer)
+(global-set-key [(hyper l)] 'goto-line)
+(global-set-key [(hyper w)]
+                (lambda () (interactive) (delete-window)))
+(global-set-key [(hyper z)] 'undo)
+(global-set-key [(hyper u)] 'revert-buffer)
+
+;; mac switch meta key
+(defun mac-switch-meta nil
+  "switch meta between Option and Command"
+  (interactive)
+  (if (eq mac-option-modifier nil)
+      (progn
+	(setq mac-option-modifier 'meta)
+	(setq mac-command-modifier 'hyper)
+	)
+    (progn
+      (setq mac-option-modifier nil)
+      (setq mac-command-modifier 'meta)
+      )
+    )
+  )
+
 (when (memq window-system '(mac ns x))
   (use-package exec-path-from-shell
     :straight t
@@ -320,7 +340,10 @@
   (defvar ns-alternate-modifier)
   (defvar ns-right-alternate-modifier)
   (setq ns-alternate-modifier 'meta)
-  (setq ns-right-alternate-modifier 'none))
+  (setq ns-right-alternate-modifier 'none)
+  (setq mac-option-modifier 'meta)
+  (setq mac-command-modifier 'hyper)
+  )
 
 
 ;; Tools configuration
@@ -658,11 +681,11 @@
   (setq pipenv-with-flycheck nil)
   :hook (python-mode . pipenv-mode))
 
-(use-package company-jedi
-  :straight t
-  :after (company)
-  :config
-  (add-to-list 'company-backends 'company-jedi))
+;(use-package company-jedi
+;  :straight t
+;  :after (company)
+;  :config
+;  (add-to-list 'company-backends 'company-jedi))
 
 (use-package highlight-indentation
   :diminish)
@@ -735,6 +758,7 @@
   :hook ((js-mode . prettier-mode)
          (js2-mode . prettier-mode)
          (typescript-mode . prettier-mode)
+         (css-mode . prettier-mode)
          (web-mode . (lambda ()
 		       (when
                            (or
@@ -1125,9 +1149,12 @@
 
 (use-package web-mode
   :mode (("\\.html?\\'" . web-mode)
-         ("\\.tsx\\'" . web-mode))
+         ("\\.tsx\\'" . web-mode)
+         ("\\.marko\\'" . web-mode))
   :straight t
   :init
+  (setq web-mode-engines-alist
+        '(("marko" . "\\.marko\\'")))
   (setq web-mode-markup-indent-offset 2)
   (setq web-mode-code-indent-offset 2)
   (setq web-mode-css-indent-offset 2)
@@ -1350,7 +1377,7 @@ If the new path's directories does not exist, create them."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
-   '("18bec4c258b4b4fb261671cf59197c1c3ba2a7a47cc776915c3e8db3334a0d25" "549ccbd11c125a4e671a1e8d3609063a91228e918ffb269e57bd2cd2c0a6f1c6" "81c3de64d684e23455236abde277cda4b66509ef2c28f66e059aa925b8b12534" "2dff5f0b44a9e6c8644b2159414af72261e38686072e063aa66ee98a2faecf0e" "7451f243a18b4b37cabfec57facc01bd1fe28b00e101e488c61e1eed913d9db9" "24714e2cb4a9d6ec1335de295966906474fdb668429549416ed8636196cb1441" "13fa7a304bd53aa4c0beec4c25c4f811de499bce9deb326798265ed0015b3b78" default))
+   '("ed8e6f452855fc7338c8be77803666b34745c19c6667197db48952107fa6d983" "18bec4c258b4b4fb261671cf59197c1c3ba2a7a47cc776915c3e8db3334a0d25" "549ccbd11c125a4e671a1e8d3609063a91228e918ffb269e57bd2cd2c0a6f1c6" "81c3de64d684e23455236abde277cda4b66509ef2c28f66e059aa925b8b12534" "2dff5f0b44a9e6c8644b2159414af72261e38686072e063aa66ee98a2faecf0e" "7451f243a18b4b37cabfec57facc01bd1fe28b00e101e488c61e1eed913d9db9" "24714e2cb4a9d6ec1335de295966906474fdb668429549416ed8636196cb1441" "13fa7a304bd53aa4c0beec4c25c4f811de499bce9deb326798265ed0015b3b78" default))
  '(safe-local-variable-values '((cider-shadow-cljs-default-options . "app"))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
